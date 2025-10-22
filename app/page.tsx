@@ -18,7 +18,7 @@ export default function page(){
       </div>
       <div className="mt-50">
         <h1 className="text-center">Features</h1>
-        <div className="flex justify-center gap-50 mt-10">
+        <div className="flex flex-col lg:flex-row justify-center gap-30 mt-10">
           <div>
             <h2>Renewal Reminders</h2>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sit explicabo cumque ea commodi maxime?</p>

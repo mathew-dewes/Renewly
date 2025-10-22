@@ -1,5 +1,10 @@
+import AssetsTable from "./_components/AssetsTable";
+
 export default function page(){
     return (
-        <p>Assets page</p>
+        <div>
+           <h2>Assets:</h2>
+            <AssetsTable/>
+        </div>
     )
 }

@@ -21,7 +21,7 @@
 
 @layer base {
 
-  p, li {
+  p, li, td {
     @apply font-light text-sm md:text-lg
   }
 
