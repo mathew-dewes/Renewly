@@ -31,16 +31,30 @@ model Asset {
   id              String   @id @default(cuid())
   name            String
   type            AssetType
-  renewalDate     DateTime
   imageUrl        String?
   businessId      String
   business        Business @relation(fields: [businessId], references: [id])
+  plantNumber String
+  serial String
+  renewals Renewal[]
+  location String
 
   userId          String   // ✅ foreign key to User
   user            User     @relation(fields: [userId], references: [id]) // ✅ back relation
 
   createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+
+}
+
+
+model Renewal {
+    id   String   @id @default(cuid())
+    renewalDate DateTime
+    createdAt       DateTime @default(now())
+    updatedAt   DateTime @updatedAt @default(now())
+    assetId String
+    asset Asset  @relation(fields: [assetId], references: [id]) 
+
 }
 
 
