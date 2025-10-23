@@ -15,10 +15,12 @@ export default function AssetsTable(){
                                 <tr>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-dark-500 uppercase">Plant no</th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-dark-500 uppercase">Asset</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-dark-500 uppercase hidden lg:table-cell">Desc</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-dark-500 uppercase">Desc</th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-dark-500 uppercase hidden lg:table-cell">Serial</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-dark-500 uppercase">Renewal type</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium textdark-500 uppercase">Renewal date</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-dark-500 uppercase hidden lg:table-cell">Type</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-dark-500 uppercase hidden lg:table-cell">Location</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-dark-500 uppercase hidden lg:table-cell"></th>
+                          
                                 </tr>
                             </thead>
 
@@ -27,16 +29,24 @@ export default function AssetsTable(){
                  
                     <tbody className="bg-white divide-y divide-gray-200">
                          
-                                       <React.Fragment >
+                           
                                            <tr className="hover:bg-gray-50">
                    
                    
                                                <td className="px-6 py-4 text-sm text-dark-500">P1.001</td>
-                                               <td className="px-6 py-4 text-sm text-dark-500 hidden lg:table-cell">Lawn Mower</td>
+                                               <td className="px-6 py-4 text-sm text-dark-500 hidden lg:table-cell">
+                                                <div className="flex gap-3 items-center">
+                                                    <div className="bg-black w-10 h-10 rounded-full"></div>
+                                            <div>Lawn Mover</div>
+                                                </div>
+                                        
+                                               </td>
                                                <td className="px-6 py-4 text-sm text-dark-500">150cc masport</td>
-                                               <td className="px-6 py-4 text-sm text-dark-500 hidden lg:table-cell">3455889</td>
-                                               <td className="px-6 py-4 text-sm text-dark-500">Service</td>
-                                               <td className="px-6 py-4 text-sm text-dark-500">31/01/26</td>
+                                               <td className="px-6 py-4 text-sm text-dark-500 hidden lg:table-cell">1234</td>
+                                               <td className="px-6 py-4 text-sm text-dark-500 hidden lg:table-cell">Machinery</td>
+                                               <td className="px-6 py-4 text-sm text-dark-500 hidden lg:table-cell">AA2</td>
+                                               <td className="px-6 py-4 text-sm text-dark-500 hidden lg:table-cell">View</td>
+                       
                               
                                
                                                 
@@ -49,7 +59,7 @@ export default function AssetsTable(){
                     
                          
                    
-                                       </React.Fragment>
+                                  
                    
                    
                    

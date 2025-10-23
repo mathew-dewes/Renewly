@@ -1,0 +1,1 @@
+export const assetTypes = ["Vehicle", "Machinery", "Equipment"]

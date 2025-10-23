@@ -3,7 +3,7 @@ import Link from "next/link"
 export default function Navbar() {
     return (
         <nav className="flex h-20 justify-between px-10 items-center bg-blue-accent-500 text-light-500">
-            <Link href={'/'}><h1>Renewly</h1></Link>
+            <Link href={'/'}><h2>Renewly</h2></Link>
 
             <ul className="md:flex gap-15 hidden">
                 <div className="flex gap-5">
@@ -11,8 +11,8 @@ export default function Navbar() {
                     <Link href={'/renewals'}><li>Renewals</li></Link>
         
                 </div>
+               <Link href={'/auth/login'}><li>Logout</li></Link>
 
-                <li>Logout</li>
             </ul>
         </nav>
     )
