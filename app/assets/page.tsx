@@ -2,6 +2,7 @@
 import AssetsTable from "./_components/AssetsTable";
 import AssetFilters from "./_components/AssetFilters";
 import Button from "@/components/ui/Button";
+import prisma from "@/server/db/prisma";
 
 
 export default async function page({searchParams}:
@@ -9,6 +10,11 @@ export default async function page({searchParams}:
 ){
 
     const filters = (await searchParams).type;
+
+    const assets = await prisma.asset.findMany();
+
+    console.log(assets);
+    
 
 
 

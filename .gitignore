@@ -42,5 +42,5 @@ next-env.d.ts
 
 *.db
 
-/server/db/generated
+/app/generated/prisma
 /prisma/seed.ts

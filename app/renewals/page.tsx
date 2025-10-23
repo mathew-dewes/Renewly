@@ -1,5 +1,17 @@
+import Button from "@/components/ui/Button";
+import RenewalsTable from "./_components/RenewalsTable";
+
 export default function page(){
     return (
-        <p>Renewals page</p>
+      <div>
+        <div>
+            <h2>Renewals</h2>
+            <div className="mt-5">
+        <Button text="Add Renewal"/>
+            </div>
+
+        </div>
+        <RenewalsTable/>
+      </div>
     )
 }
