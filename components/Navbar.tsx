@@ -1,4 +1,5 @@
 import Link from "next/link"
+import LogoutButton from "./ui/LogoutButton"
 
 export default function Navbar() {
     return (
@@ -11,7 +12,7 @@ export default function Navbar() {
                     <Link href={'/renewals'}><li>Renewals</li></Link>
         
                 </div>
-               <Link href={'/auth/login'}><li>Logout</li></Link>
+               <LogoutButton/>
 
             </ul>
         </nav>

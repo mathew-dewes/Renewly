@@ -46,7 +46,7 @@ export default function RenewalsTable(){
                                                <td className="px-6 py-4 text-sm text-dark-500 hidden lg:table-cell">Machinery</td>
                                                <td className="px-6 py-4 text-sm text-dark-500 hidden lg:table-cell">AA2</td>
                                                <td className="px-6 py-4 text-sm text-dark-500 hidden lg:table-cell">12/12/2025</td>
-                                               <td className="px-6 py-4 text-sm text-dark-500 hidden lg:table-cell">View</td>
+                                               <td className="px-6 py-4 text-sm text-dark-500 hidden lg:table-cell">Edit</td>
                        
                               
                                

@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-
 }
 
 datasource db {
@@ -8,61 +7,100 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Business {
-  id        String   @id @default(cuid())
-  name      String   @unique
-  users     User[]
-  assets    Asset[]
-  createdAt DateTime @default(now())
-}
- 
 model User {
-  id          String   @id @default(cuid())
-  name        String
-  email       String   @unique
-  password    String?
-  businessId  String
-  business    Business @relation(fields: [businessId], references: [id])
-  assets      Asset[]  // ✅ one-to-many relation with Asset
-  createdAt   DateTime @default(now())
+  id            String    @id
+  name          String
+  email         String
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @default(now()) @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+  assets        Asset[]
+
+
+  @@unique([email])
+  @@map("user")
 }
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
+
+  @@map("verification")
+}
+
+
 
 model Asset {
-  id              String   @id @default(cuid())
-  name            String
-  type            AssetType
-  imageUrl        String?
-  businessId      String
-  business        Business @relation(fields: [businessId], references: [id])
+  id          String    @id @default(cuid())
+  name        String
+  type        AssetType
+  imageUrl    String?
+  businessId  String
   plantNumber String
-  serial String
-  renewals Renewal[]
-  location String
+  serial      String
+  renewals    Renewal[]
+  location    String
 
-  userId          String   // ✅ foreign key to User
-  user            User     @relation(fields: [userId], references: [id]) // ✅ back relation
+  userId String // ✅ foreign key to User
+  user   User   @relation(fields: [userId], references: [id]) // ✅ back relation
 
-  createdAt       DateTime @default(now())
-
+  createdAt DateTime @default(now())
 }
-
 
 model Renewal {
-    id   String   @id @default(cuid())
-    renewalDate DateTime
-    createdAt       DateTime @default(now())
-    updatedAt   DateTime @updatedAt @default(now())
-    assetId String
-    asset Asset  @relation(fields: [assetId], references: [id]) 
-
+  id          String   @id @default(cuid())
+  renewalDate DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+  assetId     String
+  asset       Asset    @relation(fields: [assetId], references: [id])
 }
-
 
 enum AssetType {
   MACHINERY
   VEHICLE
   EQUIPMENT
-
 }
 
 enum RenewalType {
