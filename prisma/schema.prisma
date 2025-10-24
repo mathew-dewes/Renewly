@@ -81,12 +81,27 @@ model Asset {
   renewals    Renewal[]
   location    String
   upLoadId String? @unique
-  upload Upload? @relation(fields: [upLoadId],references: [id], onDelete: Cascade)
+  upload Upload?
 
-  userId String // ✅ foreign key to User
+  userId String
   user   User   @relation(fields: [userId], references: [id]) 
 
   createdAt DateTime @default(now())
+}
+
+model Upload {
+  id        String   @id @default(cuid())
+  name      String
+  url       String
+  fileKey   String
+  fileType  String
+  fileSize  Int
+  createdAt DateTime @default(now())
+
+  assetId   String? @unique
+  asset     Asset?  @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@map("uploads")
 }
 
 model Renewal {
@@ -99,18 +114,7 @@ model Renewal {
   asset       Asset    @relation(fields: [assetId], references: [id], onDelete: Cascade)
 }
 
-model Upload {
-  id        String   @id @default(cuid())
-  name      String
-  url       String
-  fileKey   String
-  fileType  String
-  fileSize  Int
-  createdAt DateTime @default(now())
-  asset Asset?
 
-  @@map("uploads")
-}
 
 enum AssetType {
   MACHINERY

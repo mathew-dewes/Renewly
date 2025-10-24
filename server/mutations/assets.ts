@@ -40,10 +40,16 @@ export async function createAsset(values: z.infer<typeof assetSchema>, imageUrl:
                     }
                 },
                 
+                upload:{
+                    connect:{id:upLoadId!}
+                }
+                
+                
 
 
 
-            }
+            },
+            
         });
 
         
@@ -63,10 +69,20 @@ export async function createAsset(values: z.infer<typeof assetSchema>, imageUrl:
 
 export async function deleteAsset(id: string){
     const baseUrl = process.env.BASE_URL || "http://localhost:3000";
-    await fetch(`${baseUrl}/api/uploads/${id}`, { method: "DELETE" });
-    await prisma.asset.delete({
+   await fetch(`${baseUrl}/api/uploads/${id}`, { method: "DELETE" });
+
+
+   
+    
+   await prisma.asset.delete({
         where:{
             id
+        },
+        select:{
+            upLoadId: true
         }
-    })
+    });
+
+
+    
 }

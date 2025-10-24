@@ -57,8 +57,6 @@ export default function AssetForm() {
 
       try {
         const compressedFile = await imageCompression(file, options);
-        console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
-        console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
         const upload = await startUpload([compressedFile]);
         if (!upload) return;
         imageURL = upload[0].ufsUrl;

@@ -2,17 +2,23 @@
 
 import prisma from "../db/prisma";
 
-export async function getImageFileKey(id: string){
-    const upload = await prisma.upload.findFirst({
-        where:{
-            asset:{
-                id
-            }
+export async function getUpload(id: string){
+    const asset = await prisma.asset.findUnique(
+        {where:{
+            id
         },
         select:{
-            fileKey: true
+            upload:{
+                select:{
+                    fileKey: true
+                }
+            }
         }
-    });
+    },
+    
+    );
 
-    return upload?.fileKey;
+    return asset?.upload
+
+   
 }
