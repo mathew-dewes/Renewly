@@ -11,11 +11,14 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod"
 import ErrorMessage from "../../../../components/ui/ErrorMessage";
-import { assetTypes } from "../../variables/constants";
+import { assetTypes, renewalTypes } from "../../variables/constants";
 import { assetSchema } from "@/server/mutations/schemas";
 import { createAsset } from "@/server/mutations/assets";
 import { ImageUploader } from "./ImageUploader";
 import { useUploadThing } from "@/server/config/uploadthing";
+const today = new Date().toISOString().split("T")[0];
+
+
 
 
 
@@ -39,6 +42,10 @@ export default function AssetForm() {
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormFields>({ resolver: zodResolver(assetSchema), });
 
   const onSubmit = async (values: FormFields) => {
+    
+    console.log(values);
+
+    
     
     let imageURL = null;
 
@@ -121,10 +128,10 @@ export default function AssetForm() {
       <div className="flex flex-col gap-2 w-full md:w-1/2">
         <label>Asset type</label>
 
-        <select {...register("assetType")} className="border p-1 bg-white rounded cursor-pointer" id="community" value={undefined}>
+        <select {...register("assetType")} className="border p-1 bg-white rounded cursor-pointer">
 
           {assetTypes?.map((type, key) => (
-            <option className="text-black" key={key} value={type.toUpperCase()}>
+            <option className="text-black" key={key} value={type}>
               {type}
             </option>
           ))}
@@ -132,6 +139,28 @@ export default function AssetForm() {
         {errors.assetType &&
           <ErrorMessage message={errors.assetType?.message} />}
       </div>
+      <div className="flex flex-col gap-2 w-full md:w-1/2">
+        <label>Renewal type</label>
+
+        <select {...register("renewalType")} className="border p-1 bg-white rounded cursor-pointer">
+
+          {renewalTypes?.map((type, key) => (
+            <option className="text-black" key={key} value={type.toUpperCase()}>
+              {type}
+            </option>
+          ))}
+        </select>
+        {errors.assetType &&
+          <ErrorMessage message={errors.renewalType?.message} />}
+      </div>
+      <div className="flex flex-col gap-2 w-full md:w-1/2">
+        <label>Renewal Date</label>
+
+      <input {...register("renewalDate")} min={today}  className="border p-2 rounded bg-white" type="date" />
+        {errors.renewalDate &&
+          <ErrorMessage message={errors.renewalDate?.message} />}
+      </div>
+    
 
       <ImageUploader file={file} setFile={setFile} isUploading={isUploading} />
 

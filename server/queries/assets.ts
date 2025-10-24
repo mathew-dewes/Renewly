@@ -18,3 +18,22 @@ export async function getAssets() {
         }
     });
 }
+
+export async function getAsset(id:string){
+    return await prisma.asset.findUnique({
+        select: {
+            id: true,
+            plantNumber: true,
+            name: true,
+            serial: true,
+            type:true,
+            location: true,
+            imageUrl: true
+
+
+        },
+        where:{
+            id
+        }
+    });
+}

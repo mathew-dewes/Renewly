@@ -1,7 +1,6 @@
 
-import AssetImage from "@/components/ui/AssetImage";
+import AssetImage from "@/components/ui/images/AssetImage";
 import { getAssets } from "@/server/queries/assets";
-import Image from "next/image"
 import Link from "next/link"
 
 
@@ -40,7 +39,9 @@ export default async function AssetsTable() {
                             <td className="px-6 py-4 text-sm text-dark-500 hidden lg:table-cell">
                                 <div className="flex gap-3 items-center">
                                     <div className="w-16 h-16 overflow-hidden rounded-full">
-                               <AssetImage src={asset.imageUrl || ""} alt="asset-image" />
+                               <AssetImage src={asset.imageUrl || "/placeholder.jpg"} alt="asset-image" /> 
+                               
+                      
                                     </div>
 
 

@@ -16,7 +16,7 @@ export async function createAsset(values: z.infer<typeof assetSchema>, imageUrl:
     }
 
 
-    const { asset, assetType, plant, serialNumber, location } = values;
+    const { asset, assetType, plant, serialNumber, location, renewalType, renewalDate } = values;
 
     try {
         await prisma.asset.create({
@@ -27,7 +27,15 @@ export async function createAsset(values: z.infer<typeof assetSchema>, imageUrl:
                 plantNumber: plant.toUpperCase(),
                 serial: serialNumber.toUpperCase(),
                 userId,
-                imageUrl
+                imageUrl,
+                renewals:{
+                    create:{
+                        renewalDate: new Date(renewalDate),
+                        renewalType
+                    
+
+                    }
+                }
 
 
 
