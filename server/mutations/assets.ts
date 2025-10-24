@@ -5,6 +5,8 @@ import { assetSchema } from "./schemas";
 import prisma from "../db/prisma";
 import { getUserId } from "../auth/auth";
 
+
+
 export async function createAsset(values: z.infer<typeof assetSchema>, imageUrl: string | null, upLoadId: string | null ) {
 
     const userId = await getUserId();
@@ -60,7 +62,8 @@ export async function createAsset(values: z.infer<typeof assetSchema>, imageUrl:
 
 
 export async function deleteAsset(id: string){
-    await fetch(`/api/uploads/${id}`, { method: "DELETE" });
+    const baseUrl = process.env.BASE_URL || "http://localhost:3000";
+    await fetch(`${baseUrl}/api/uploads/${id}`, { method: "DELETE" });
     await prisma.asset.delete({
         where:{
             id

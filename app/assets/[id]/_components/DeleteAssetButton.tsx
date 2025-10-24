@@ -9,7 +9,7 @@ export default function DeleteAssetButton({assetId}:
     const router = useRouter();
 
     async function handleDelete(){
-        await deleteAsset(assetId);
+        deleteAsset(assetId);
         router.push('/assets')
     }
 

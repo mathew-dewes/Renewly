@@ -16,6 +16,7 @@ import { assetSchema } from "@/server/mutations/schemas";
 import { createAsset } from "@/server/mutations/assets";
 import { ImageUploader } from "./ImageUploader";
 import { useUploadThing } from "@/server/config/uploadthing";
+import imageCompression from "browser-image-compression";
 const today = new Date().toISOString().split("T")[0];
 
 
@@ -42,27 +43,44 @@ export default function AssetForm() {
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormFields>({ resolver: zodResolver(assetSchema), });
 
   const onSubmit = async (values: FormFields) => {
-    
+
     let imageURL = null;
     let upLoadId = null;
 
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+    }
+
     if (file) {
-        const upload = await startUpload([file]);
+
+      try {
+        const compressedFile = await imageCompression(file, options);
+        console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
+        console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+        const upload = await startUpload([compressedFile]);
         if (!upload) return;
         imageURL = upload[0].ufsUrl;
         upLoadId = upload[0].serverData.uploadId
         console.log(upload[0].serverData.uploadId);
-        
-        
+
+      } catch (error) {
+        console.log(error);
       }
-    
+
+
+
+
+    }
+
     const result = await createAsset(values, imageURL, upLoadId);
     if (result?.status === "error") {
       setServerError(result.message)
       console.log(result.message);
     } else {
-  
-        router.push("/assets");
+
+      router.push("/assets");
     }
 
 
@@ -155,11 +173,11 @@ export default function AssetForm() {
       <div className="flex flex-col gap-2 w-full md:w-1/2">
         <label>Renewal Date</label>
 
-      <input {...register("renewalDate")} min={today}  className="border p-2 rounded bg-white" type="date" />
+        <input {...register("renewalDate")} min={today} className="border p-2 rounded bg-white" type="date" />
         {errors.renewalDate &&
           <ErrorMessage message={errors.renewalDate?.message} />}
       </div>
-    
+
 
       <ImageUploader file={file} setFile={setFile} isUploading={isUploading} />
 
