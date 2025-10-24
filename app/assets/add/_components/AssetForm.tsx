@@ -43,21 +43,20 @@ export default function AssetForm() {
 
   const onSubmit = async (values: FormFields) => {
     
-    console.log(values);
-
-    
-    
     let imageURL = null;
+    let upLoadId = null;
 
     if (file) {
         const upload = await startUpload([file]);
         if (!upload) return;
-        imageURL = upload[0].ufsUrl
-        console.log(upload[0].ufsUrl);
+        imageURL = upload[0].ufsUrl;
+        upLoadId = upload[0].serverData.uploadId
+        console.log(upload[0].serverData.uploadId);
+        
         
       }
     
-    const result = await createAsset(values, imageURL);
+    const result = await createAsset(values, imageURL, upLoadId);
     if (result?.status === "error") {
       setServerError(result.message)
       console.log(result.message);

@@ -1,10 +1,17 @@
 
-import React from "react"
+import { getRenewals } from "@/server/queries/renewals";
+import Link from "next/link";
 
 
 
-export default function RenewalsTable(){
 
+
+export default async function RenewalsTable(){
+
+    const renewals = await getRenewals();
+
+    console.log(renewals);
+    
 
 
    
@@ -30,34 +37,37 @@ export default function RenewalsTable(){
                     <tbody className="bg-white divide-y divide-gray-200">
                          
                            
-                                           <tr className="hover:bg-gray-50">
-                   
-                   
-                                               <td className="px-6 py-4 text-sm text-dark-500">P1.001</td>
-                                               <td className="px-6 py-4 text-sm text-dark-500 hidden lg:table-cell">
-                                                <div className="flex gap-3 items-center">
-                                                    <div className="bg-black w-10 h-10 rounded-full"></div>
-                                            <div>Lawn Mover</div>
-                                                </div>
-                                        
-                                               </td>
-                     
-                
-                                               <td className="px-6 py-4 text-sm text-dark-500 hidden lg:table-cell">Machinery</td>
-                                               <td className="px-6 py-4 text-sm text-dark-500 hidden lg:table-cell">AA2</td>
-                                               <td className="px-6 py-4 text-sm text-dark-500 hidden lg:table-cell">12/12/2025</td>
-                                               <td className="px-6 py-4 text-sm text-dark-500 hidden lg:table-cell">Edit</td>
-                       
-                              
-                               
-                                                
-                   
-                   
-                   
-                   
-                   
-                                           </tr>
-                    
+                                       {renewals?.map((renewal) => {
+                    return (
+                        <tr key={renewal.id} className="hover:bg-gray-50">
+
+
+
+                            <td className="px-6 py-4 text-sm text-dark-500 hidden md:table-cell">{renewal.asset.plantNumber}</td>
+                            <td className="px-6 py-4 h-20 text-sm text-dark-500 hidden md:table-cell font-medium">
+                                {renewal.asset.name}
+
+                            </td>
+
+                            <td className="px-6 py-4 text-sm text-dark-500 hidden md:table-cell">{renewal.renewalType}</td>
+                            <td className="px-6 py-4 text-sm text-dark-500 hidden md:table-cell">{renewal.asset.location}</td>
+                            <td className="px-6 py-4 text-sm text-dark-500 hidden lg:table-cell">{renewal.renewalDate.toLocaleDateString()}</td>
+                            <td className="px-6 py-4 text-sm text-dark-500 hidden md:table-cell">
+                                <Link href={`/renewals/${renewal.id}`}>View</Link>
+                            </td>
+
+
+
+
+
+
+
+
+
+                        </tr>
+                    )
+                })}
+
                          
                    
                                   

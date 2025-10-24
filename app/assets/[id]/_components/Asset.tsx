@@ -11,11 +11,13 @@ export default async function Asset({assetId}:
 
     if (!asset) return
 
-    console.log(asset);
+
     
     return (
         <div className="flex gap-5">
-            <AssetImageLarge src={asset.imageUrl || "/placeholder.jpg"} alt="Asset-image" size={100}/>
+    <AssetImageLarge src={asset.imageUrl!} alt="Asset-image" size={200}/>
+ 
+
             <div>
  <h1>{asset.name}</h1>
             <p>Plant number: {asset.plantNumber}</p>

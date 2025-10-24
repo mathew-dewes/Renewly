@@ -1,6 +1,7 @@
 import Button from "@/components/ui/Button";
 import Asset from "./_components/Asset";
 import GoBack from "@/components/ui/GoBack";
+import DeleteAssetButton from "./_components/DeleteAssetButton";
 
 export default async function page({params}:
     {params: Promise<{id: string}>}
@@ -20,7 +21,7 @@ export default async function page({params}:
            
             </div>
             <div className="mt-3 md:mt-0">
-               <Button danger={true} text="Delete"/>
+              <DeleteAssetButton assetId={id}/>
             </div>
   
             </div>

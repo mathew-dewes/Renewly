@@ -3,7 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import LoadingSpinner from "../LoadingSpinner";
 
-export default function AssetImage({ src, alt, size = 64 }: { src: string; alt: string; size?: number }) {
+export default function AssetImage({ src, alt, size = 80 }: { src: string; alt: string; size?: number }) {
   const [loading, setLoading] = useState(true);
 
   return (
@@ -19,7 +19,7 @@ export default function AssetImage({ src, alt, size = 64 }: { src: string; alt: 
         width={size}
         height={size}
         className="object-cover w-full h-full"
-        onLoadingComplete={() => setLoading(false)}
+        onLoad={() => setLoading(false)}
       />
     </div>
   );

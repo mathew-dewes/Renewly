@@ -9,10 +9,12 @@ export const ourFileRouter = {
     image: { maxFileSize: "4MB" },
   })
   .onUploadComplete(async({ file }) => {
-    await prisma.upload.create({
+    const upload = await prisma.upload.create({
       data: { name: file.name, fileKey: file.key, url: file.ufsUrl, fileType: file.type, fileSize: file.size },
     });
+      return { uploadId: upload.id, url: upload.url };
   })
+  
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;

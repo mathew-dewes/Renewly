@@ -80,9 +80,11 @@ model Asset {
   serial      String
   renewals    Renewal[]
   location    String
+  upLoadId String? @unique
+  upload Upload? @relation(fields: [upLoadId],references: [id], onDelete: Cascade)
 
   userId String // ✅ foreign key to User
-  user   User   @relation(fields: [userId], references: [id]) // ✅ back relation
+  user   User   @relation(fields: [userId], references: [id]) 
 
   createdAt DateTime @default(now())
 }
@@ -94,7 +96,7 @@ model Renewal {
   updatedAt   DateTime @default(now()) @updatedAt
   assetId     String
   renewalType RenewalType
-  asset       Asset    @relation(fields: [assetId], references: [id])
+  asset       Asset    @relation(fields: [assetId], references: [id], onDelete: Cascade)
 }
 
 model Upload {
@@ -105,6 +107,7 @@ model Upload {
   fileType  String
   fileSize  Int
   createdAt DateTime @default(now())
+  asset Asset?
 
   @@map("uploads")
 }

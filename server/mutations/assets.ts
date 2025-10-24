@@ -5,7 +5,7 @@ import { assetSchema } from "./schemas";
 import prisma from "../db/prisma";
 import { getUserId } from "../auth/auth";
 
-export async function createAsset(values: z.infer<typeof assetSchema>, imageUrl: string | null) {
+export async function createAsset(values: z.infer<typeof assetSchema>, imageUrl: string | null, upLoadId: string | null ) {
 
     const userId = await getUserId();
     if (!userId){
@@ -28,6 +28,7 @@ export async function createAsset(values: z.infer<typeof assetSchema>, imageUrl:
                 serial: serialNumber.toUpperCase(),
                 userId,
                 imageUrl,
+                upLoadId,
                 renewals:{
                     create:{
                         renewalDate: new Date(renewalDate),
@@ -35,12 +36,15 @@ export async function createAsset(values: z.infer<typeof assetSchema>, imageUrl:
                     
 
                     }
-                }
+                },
+                
 
 
 
             }
         });
+
+        
 
         return {
             status: "success", message: "Post created successfully"
@@ -52,4 +56,14 @@ export async function createAsset(values: z.infer<typeof assetSchema>, imageUrl:
             status: "error", message: "There was an error"
         }
     }
+}
+
+
+export async function deleteAsset(id: string){
+    await fetch(`/api/uploads/${id}`, { method: "DELETE" });
+    await prisma.asset.delete({
+        where:{
+            id
+        }
+    })
 }

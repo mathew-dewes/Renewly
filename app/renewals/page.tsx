@@ -1,4 +1,4 @@
-import Button from "@/components/ui/Button";
+
 import RenewalsTable from "./_components/RenewalsTable";
 
 export default function page(){
@@ -6,9 +6,7 @@ export default function page(){
       <div>
         <div>
             <h2>Renewals</h2>
-            <div className="mt-5">
-        <Button text="Add Renewal"/>
-            </div>
+ 
 
         </div>
         <RenewalsTable/>
