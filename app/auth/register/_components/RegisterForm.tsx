@@ -38,7 +38,7 @@ export default function RegisterForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}  className="max-w-sm mx-auto mt-20">
+        <form onSubmit={handleSubmit(onSubmit)}  className="max-w-sm mx-auto mt-10">
             <div className="mb-5">
     
                 <label className="block mb-2 text-sm font-medium">Your name</label>

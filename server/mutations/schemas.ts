@@ -7,4 +7,5 @@ export const assetSchema = z.object({
   location: z.string().min(1, "Location is required").max(10, "Location must be less than 10 charaters"),
   assetType: z.nativeEnum(AssetType),
   serialNumber:z.string().min(4, "Serial number needs to be 4 or more charaters").max(10, "Serial number must be less than 10 charaters"),
+
 });

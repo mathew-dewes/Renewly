@@ -14,29 +14,53 @@ import ErrorMessage from "../../../../components/ui/ErrorMessage";
 import { assetTypes } from "../../variables/constants";
 import { assetSchema } from "@/server/mutations/schemas";
 import { createAsset } from "@/server/mutations/assets";
+import { ImageUploader } from "./ImageUploader";
+import { useUploadThing } from "@/server/config/uploadthing";
 
 
 
 type FormFields = z.infer<typeof assetSchema>
 
 export default function AssetForm() {
-    const router = useRouter();
+  const router = useRouter();
 
   const [serverError, setServerError] = useState("");
+  const [file, setFile] = useState<File | null>(null);
 
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormFields>({ resolver: zodResolver(assetSchema) });
+
+  const { startUpload, isUploading } = useUploadThing("imageUploader", {
+    onClientUploadComplete: () => {
+      setFile(null);
+
+    },
+
+  });
+
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormFields>({ resolver: zodResolver(assetSchema), });
 
   const onSubmit = async (values: FormFields) => {
-    const result = await createAsset(values);
-    if (result?.status === "error"){
-           setServerError(result.message)
-            console.log(result.message);
+    
+    let imageURL = null;
+
+    if (file) {
+        const upload = await startUpload([file]);
+        if (!upload) return;
+        imageURL = upload[0].ufsUrl
+        console.log(upload[0].ufsUrl);
+        
+      }
+    
+    const result = await createAsset(values, imageURL);
+    if (result?.status === "error") {
+      setServerError(result.message)
+      console.log(result.message);
     } else {
-         router.push("/assets");
+  
+        router.push("/assets");
     }
 
-    
- 
+
+
 
   }
   return (
@@ -96,23 +120,28 @@ export default function AssetForm() {
 
       <div className="flex flex-col gap-2 w-full md:w-1/2">
         <label>Asset type</label>
-     
+
         <select {...register("assetType")} className="border p-1 bg-white rounded cursor-pointer" id="community" value={undefined}>
-  
+
           {assetTypes?.map((type, key) => (
             <option className="text-black" key={key} value={type.toUpperCase()}>
               {type}
             </option>
           ))}
         </select>
-                {errors.assetType &&
+        {errors.assetType &&
           <ErrorMessage message={errors.assetType?.message} />}
       </div>
+
+      <ImageUploader file={file} setFile={setFile} isUploading={isUploading} />
+
+
+
       <div className="mt-5">
-     <Button  text={isSubmitting ? "Submitting" : "Submit"}  />
-            <p className="mt-5 text-red-500">{serverError}</p>
+        <Button text={isSubmitting ? "Submitting" : "Submit"} />
+        <p className="mt-5 text-red-500">{serverError}</p>
       </div>
- 
+
 
 
     </form>

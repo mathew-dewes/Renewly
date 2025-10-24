@@ -108,3 +108,12 @@ export async function Logout() {
     return result;
 
 }
+
+export async function getSession(){
+        return await auth.api.getSession({headers: await headers()})
+}
+
+export async function getUserId(){
+        const user = await auth.api.getSession({headers: await headers()});
+    return user?.user.id
+}

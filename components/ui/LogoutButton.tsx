@@ -10,7 +10,7 @@ export default function LogoutButton(){
 
     async function handleSignOut(){
         await Logout();
-        router.push("/auth/login")
+        router.push("/")
     }
     return <button className="cursor-pointer hidden lg:block" onClick={handleSignOut}>Logout</button>
 }

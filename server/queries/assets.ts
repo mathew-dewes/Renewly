@@ -11,7 +11,8 @@ export async function getAssets() {
             name: true,
             serial: true,
             type:true,
-            location: true
+            location: true,
+            imageUrl: true
 
 
         }

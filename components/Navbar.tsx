@@ -1,12 +1,15 @@
 import Link from "next/link"
 import LogoutButton from "./ui/LogoutButton"
+import { getSession } from "@/server/auth/auth"
 
-export default function Navbar() {
+export default async function Navbar() {
+
+    const session = await getSession();
+    
     return (
         <nav className="flex h-20 justify-between px-10 items-center bg-blue-accent-500 text-light-500">
             <Link href={'/'}><h2>Renewly</h2></Link>
-
-            <ul className="md:flex gap-15 hidden">
+            {session && <ul className="md:flex gap-15 hidden">
                 <div className="flex gap-5">
                     <Link href={'/assets'}><li>Assets</li></Link>
                     <Link href={'/renewals'}><li>Renewals</li></Link>
@@ -14,7 +17,9 @@ export default function Navbar() {
                 </div>
                <LogoutButton/>
 
-            </ul>
+            </ul>}
+
+            
         </nav>
     )
 }

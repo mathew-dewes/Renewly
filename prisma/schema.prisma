@@ -76,7 +76,6 @@ model Asset {
   name        String
   type        AssetType
   imageUrl    String?
-  businessId  String
   plantNumber String
   serial      String
   renewals    Renewal[]
@@ -95,6 +94,18 @@ model Renewal {
   updatedAt   DateTime @default(now()) @updatedAt
   assetId     String
   asset       Asset    @relation(fields: [assetId], references: [id])
+}
+
+model Upload {
+  id        String   @id @default(cuid())
+  name      String
+  url       String
+  fileKey   String
+  fileType  String
+  fileSize  Int
+  createdAt DateTime @default(now())
+
+  @@map("uploads")
 }
 
 enum AssetType {

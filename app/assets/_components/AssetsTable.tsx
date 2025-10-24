@@ -1,16 +1,15 @@
 
+import AssetImage from "@/components/ui/AssetImage";
+import { getAssets } from "@/server/queries/assets";
+import Image from "next/image"
 import Link from "next/link"
-import React from "react"
-
-
-
-export default function AssetsTable({ assets }: {
-    assets: { id: string, plantNumber: string, name: string, serial: string, type: string, location: string }[]
-}) {
 
 
 
 
+export default async function AssetsTable() {
+
+        const assets = await getAssets();
     return (
 
         <table className="w-full mt-5 hidden md:table">
@@ -40,7 +39,11 @@ export default function AssetsTable({ assets }: {
                             <td className="px-6 py-4 text-sm text-dark-500">{asset.plantNumber}</td>
                             <td className="px-6 py-4 text-sm text-dark-500 hidden lg:table-cell">
                                 <div className="flex gap-3 items-center">
-                                    <div className="bg-black w-10 h-10 rounded-full"></div>
+                                    <div className="w-16 h-16 overflow-hidden rounded-full">
+                               <AssetImage src={asset.imageUrl || ""} alt="asset-image" />
+                                    </div>
+
+
                                     <div>{asset.name}</div>
                                 </div>
 
@@ -65,7 +68,7 @@ export default function AssetsTable({ assets }: {
                     )
                 })}
 
-  
+
 
 
 
