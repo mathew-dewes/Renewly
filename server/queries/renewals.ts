@@ -18,6 +18,10 @@ export async function getRenewals(){
             renewalType: true,
             renewalDate:true
 
+        },
+        take:10,
+        orderBy:{
+            renewalDate:"asc"
         }
     });
 }

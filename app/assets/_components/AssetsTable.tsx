@@ -1,19 +1,18 @@
 
 import AssetThumbnail from "@/components/ui/images/AssetImage";
 
+
 import { getAssets } from "@/server/queries/assets";
 import { AssetType } from "@prisma/client";
 import Link from "next/link"
 
 
 
-export default async function AssetsTable({ filters }:
-    { filters: AssetType | null }
+export default async function AssetsTable({ filters, page, pageSize }:
+    { filters: AssetType | null, page: number, pageSize: number }
 ) {
 
-    const assets = await getAssets(filters);
-
-
+    const assets = await getAssets(filters, page, pageSize);
 
 
     return (

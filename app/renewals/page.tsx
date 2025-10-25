@@ -9,7 +9,9 @@ export default function page(){
  
 
         </div>
+        
         <RenewalsTable/>
+     
       </div>
     )
 }
