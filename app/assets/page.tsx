@@ -1,15 +1,15 @@
 
 import AssetsTable from "./_components/AssetsTable";
-import AssetFilters from "./_components/AssetFilters";
-import Button from "@/components/ui/Button";
-import Link from "next/link";
-import FilterTab from "@/components/ui/FilterTab";
+
+
 import { Suspense } from "react";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import { AssetType } from "@prisma/client";
+import TypeDropDown from "./_components/TypeDropDown";
 
 
 export default async function page({ searchParams }:
-    { searchParams: Promise<{ type: string }> }
+    { searchParams: Promise<{ type: AssetType }> }
 ) {
 
     const filters = (await searchParams).type;
@@ -18,20 +18,17 @@ export default async function page({ searchParams }:
 
     return (
         <div>
-
-            <h2>Assets:</h2>
-     <AssetFilters />
-          <div className="my-3">
-
-                <FilterTab filters={filters} routeTo="/assets" />
+            <h2>Assets</h2>
+            <div className="flex items-center mt-3 gap-10">
+      <div className="flex gap-5 items-center">
+               <p className="font-semibold">View:</p>
+                     <TypeDropDown filter={filters}/>
+   
+                     </div>
             </div>
-
-            <div className="mt-5 flex gap-5">
-                <Link href={'/assets/add'}><Button text="Add asset" /></Link>
-
-            </div>
+      
             <Suspense fallback={<LoadingSpinner text="Loading assets..."/>}>
-       <AssetsTable/> 
+       <AssetsTable filters={filters || null}/> 
             </Suspense>
     
 

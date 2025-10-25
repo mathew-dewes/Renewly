@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/navigation/Navbar";
 
 
 const poppins = Poppins({
@@ -29,7 +29,7 @@ export default function RootLayout({
         className={`${poppins.className} antialiased`}
       >         
       <Navbar/>
-        <main className="mx-10 mt-5">
+        <main className="mx-5 md:mx-10 mt-5">
  
           {children}
         </main>

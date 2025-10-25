@@ -3,6 +3,7 @@ import Asset from "./_components/Asset";
 import GoBack from "@/components/ui/GoBack";
 import DeleteAssetButton from "./_components/DeleteAssetButton";
 
+
 export default async function page({params}:
     {params: Promise<{id: string}>}
 ){
@@ -10,9 +11,7 @@ export default async function page({params}:
     const {id} = await params;
 
 
-
-
-    
+ 
 
     return (
         <div>
@@ -22,7 +21,7 @@ export default async function page({params}:
             <div className="flex flex-col md:flex-row mt-5 justify-between">
             <div className="flex gap-2">
                 <Button text="Edit"/>
-                <Button text="Add renewal"/>
+
            
             </div>
             <div className="mt-3 md:mt-0">

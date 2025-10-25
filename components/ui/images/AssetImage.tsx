@@ -3,11 +3,11 @@ import { useState } from "react";
 import Image from "next/image";
 import LoadingSpinner from "../LoadingSpinner";
 
-export default function AssetImage({ src, alt, size = 80 }: { src: string; alt: string; size?: number }) {
+export default function AssetThumbnail({ src, alt, size}: { src: string; alt: string; size?: number }) {
   const [loading, setLoading] = useState(true);
 
   return (
-    <div className="w-16 h-16 overflow-hidden  relative">
+    <div className="w-10 h-10 md:w-16 md:h-16 overflow-hidden  relative">
       {loading && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
           <LoadingSpinner />
@@ -18,6 +18,7 @@ export default function AssetImage({ src, alt, size = 80 }: { src: string; alt: 
         alt={alt}
         width={size}
         height={size}
+        quality={75}
         className="object-cover w-full h-full"
         onLoad={() => setLoading(false)}
       />

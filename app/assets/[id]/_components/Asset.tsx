@@ -10,9 +10,6 @@ export default async function Asset({assetId}:
     const asset = await getAsset(assetId);
 
     if (!asset) return
-
-
-    
     return (
         <div className="flex gap-5">
     <AssetImageLarge src={asset.imageUrl!} alt="Asset-image" size={200}/>

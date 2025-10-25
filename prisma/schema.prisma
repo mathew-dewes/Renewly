@@ -76,7 +76,7 @@ model Asset {
   name        String
   type        AssetType
   imageUrl    String?
-  plantNumber String
+  plantNumber String @unique
   serial      String
   renewals    Renewal[]
   location    String
@@ -87,6 +87,7 @@ model Asset {
   user   User   @relation(fields: [userId], references: [id]) 
 
   createdAt DateTime @default(now())
+
 }
 
 model Upload {

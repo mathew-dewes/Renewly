@@ -22,3 +22,14 @@ export async function getUpload(id: string){
 
    
 }
+
+export async function hasImage(id:string){
+               return await prisma.asset.findUnique({
+        where:{
+            id,
+            NOT:{
+                upLoadId:null
+            }
+        }
+    });
+}

@@ -12,5 +12,5 @@ export default function LogoutButton(){
         await Logout();
         router.push("/")
     }
-    return <button className="cursor-pointer hidden lg:block" onClick={handleSignOut}>Logout</button>
+    return <button className="cursor-pointer hidden md:block" onClick={handleSignOut}>Logout</button>
 }

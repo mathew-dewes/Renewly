@@ -17,6 +17,7 @@ import { createAsset } from "@/server/mutations/assets";
 import { ImageUploader } from "./ImageUploader";
 import { useUploadThing } from "@/server/config/uploadthing";
 import imageCompression from "browser-image-compression";
+import { options } from "@/server/config/image";
 const today = new Date().toISOString().split("T")[0];
 
 
@@ -47,11 +48,6 @@ export default function AssetForm() {
     let imageURL = null;
     let upLoadId = null;
 
-    const options = {
-      maxSizeMB: 1,
-      maxWidthOrHeight: 1920,
-      useWebWorker: true,
-    }
 
     if (file) {
 
@@ -61,7 +57,6 @@ export default function AssetForm() {
         if (!upload) return;
         imageURL = upload[0].ufsUrl;
         upLoadId = upload[0].serverData.uploadId
-        console.log(upload[0].serverData.uploadId);
 
       } catch (error) {
         console.log(error);
@@ -87,6 +82,7 @@ export default function AssetForm() {
   }
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="max-w-sm mt-10 flex flex-col gap-3">
+      {serverError && <ErrorMessage message={serverError}/>}
       <div>
         <label htmlFor="title" className="block mb-2 text-sm font-medium">
           Asset name
@@ -94,7 +90,7 @@ export default function AssetForm() {
         <input {...register("asset")}
           type="text"
           id="title"
-          className={`bg-gray-50 border border-gray-300 text-sm rounded-lg  block w-full p-2.5`}
+          className={`bg-gray-50 border border-gray-300 text-sm rounded-lg block w-full p-2.5`}
 
         />
         {errors.asset &&
@@ -107,7 +103,7 @@ export default function AssetForm() {
         <input {...register("plant")}
           type="text"
           id="title"
-          className={`bg-gray-50  border border-gray-300 text-sm active:ring-amber-300 rounded-lg block w-full p-2.5`}
+          className={`bg-gray-50  border uppercase border-gray-300 text-sm active:ring-amber-300 rounded-lg block w-full p-2.5`}
 
         />
         {errors.plant &&
@@ -120,7 +116,7 @@ export default function AssetForm() {
         <input {...register("serialNumber")}
           type="text"
           id="title"
-          className={`bg-gray-50 border border-gray-300 text-sm rounded-lg  block w-full p-2.5`}
+          className={`bg-gray-50 border uppercase border-gray-300 text-sm rounded-lg  block w-full p-2.5`}
 
         />
         {errors.serialNumber &&
@@ -133,7 +129,7 @@ export default function AssetForm() {
         <input {...register("location")}
           type="text"
           id="title"
-          className={`bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
+          className={`bg-gray-50 border uppercase border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
 
         />
         {errors.location &&
@@ -183,7 +179,7 @@ export default function AssetForm() {
 
       <div className="mt-5">
         <Button text={isSubmitting ? "Submitting" : "Submit"} />
-        <p className="mt-5 text-red-500">{serverError}</p>
+
       </div>
 
 

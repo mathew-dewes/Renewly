@@ -1,8 +1,9 @@
 "use server";
 
+import { AssetType } from "@prisma/client";
 import prisma from "../db/prisma";
 
-export async function getAssets() {
+export async function getAssets(filter: AssetType | null) {
 
     return await prisma.asset.findMany({
         select: {
@@ -15,7 +16,13 @@ export async function getAssets() {
             imageUrl: true
 
 
-        }
+        },
+                ...(filter && {where:{
+                    type: {
+                        equals: filter
+                    }
+                }})
+
     });
 }
 
