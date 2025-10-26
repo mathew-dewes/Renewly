@@ -45,7 +45,8 @@ export default async function page({ searchParams }:
             </div>
 
             <SearchBar />
-            <Suspense fallback={<LoadingSpinner text="Loading assets..." />}>
+            <Suspense fallback={<div className="mt-10 mb-50"><LoadingSpinner text="Loading assets..." />
+                </div>}>
                 <AssetsTable filters={filters || null} page={page} pageSize={pageSize} />
             </Suspense>
             <div className="mt-5">

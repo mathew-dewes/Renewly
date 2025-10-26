@@ -57,6 +57,9 @@ export default function TypeDropDown({ filter = "All Assets" }:
       {isOpen && (
         <div className="absolute left-0 w-fit p-2 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow-sm z-10">
           <ul className="py-2 text-sm font-semibold text-dark-500">
+             <li onClick={() => updateTypeParam("ALL")} className="block px-4 rounded-lg py-2 hover:bg-gray-100 font-base font-medium dark:hover:bg-gray-600 hover:text-white">
+                  ALL
+                </li>
             {assetTypes.map((type, key) => {
     
               return (

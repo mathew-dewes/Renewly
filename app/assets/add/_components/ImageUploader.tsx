@@ -1,21 +1,24 @@
 "use client";
 
 
-import {  useState } from "react";
+import { useState } from "react";
 import { useDropzone } from "react-dropzone";
-import Image from "next/image";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import ImagePreview from "@/components/ui/images/ImagePreview";
 
 
 interface ImageUploaderProps {
   file: File | null;
   setFile: (file: File | null) => void;
-  isUploading: boolean;
+  isUploading: boolean,
+  savedImage?: string | null;
 
 }
 
-export function ImageUploader({ file, setFile, isUploading }: ImageUploaderProps){
-  const [preview, setPreview] = useState<string | null>(null);
+export function ImageUploader({ file, setFile, isUploading, savedImage }: ImageUploaderProps){
+  const [preview, setPreview] = useState<string | null>(savedImage ?? null);
+
+
 
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -27,6 +30,8 @@ export function ImageUploader({ file, setFile, isUploading }: ImageUploaderProps
       setFile(f);
     },
   });
+
+  
 
 
   return  (
@@ -51,14 +56,16 @@ export function ImageUploader({ file, setFile, isUploading }: ImageUploaderProps
             </p>
           ) : (
             <div className="space-y-4">
-      
-                <Image
+              {savedImage && <p>Drag or click here to replace uploaded image</p>}
+     
+      <ImagePreview src={preview} alt="Preview"/>
+                {/* <Image
                   src={preview}
                   alt="Preview"
                   width={400}
                   height={200}
-                  className="max-h-64 mx-auto rounded"
-                />
+                  className={`max-h-64 mx-auto rounded ${savedImage ? "opacity-80" : ""}`}
+                /> */}
            
              
           
@@ -68,7 +75,7 @@ export function ImageUploader({ file, setFile, isUploading }: ImageUploaderProps
         </div>
 
 
-        {isUploading && <LoadingSpinner text="Adding asset..."/>}
+        {isUploading && <LoadingSpinner text={`${savedImage ? "Updating" : "Creating"} asset...`}/>}
 
 
       </div>

@@ -1,6 +1,5 @@
 
-import AssetThumbnail from "@/components/ui/images/AssetImage";
-
+import AssetThumbnail from "@/components/ui/images/AssetThumbnail";
 
 import { getAssets } from "@/server/queries/assets";
 import { AssetType } from "@prisma/client";
@@ -11,6 +10,7 @@ import Link from "next/link"
 export default async function AssetsTable({ filters, page, pageSize }:
     { filters: AssetType | null, page: number, pageSize: number }
 ) {
+
 
     const assets = await getAssets(filters, page, pageSize);
 
@@ -32,8 +32,8 @@ export default async function AssetsTable({ filters, page, pageSize }:
                     <tr>
                         <th className="px-3 py-3 text-left text-xs font-medium text-dark-500 uppercase">Plant</th>
                         <th className="px-3 py-3 text-left text-xs font-medium text-dark-500 uppercase">Asset</th>
-
-                        <th className="px-3 py-3 text-left text-xs font-medium text-dark-500 uppercase  md:table-cell">Serial</th>
+                        <th className="px-3 py-3 text-left text-xs font-medium text-dark-500 uppercase">Serial</th>
+                        <th className="px-3 py-3 text-left text-xs font-medium text-dark-500 uppercase  md:hidden"></th>
                         <th className="px-3 py-3 text-left text-xs font-medium text-dark-500 uppercase hidden  lg:table-cell">Type</th>
                         <th className="px-3 py-3 text-left text-xs font-medium text-dark-500 uppercase hidden   lg:table-cell">Location</th>
                         <th className="px-3 py-3 text-left text-xs font-medium text-dark-500 uppercase hidden   md:table-cell"></th>
@@ -55,10 +55,13 @@ export default async function AssetsTable({ filters, page, pageSize }:
                                 <td className="px-3 py-4 h-20 text-sm text-dark-500  md:table-cell">
                                     <div className="flex gap-2 items-center">
                                         {asset.imageUrl && <div className="overflow-hidden rounded-full">
-                                            <AssetThumbnail size={80} src={asset.imageUrl} alt="asset-image" />
+                                            <AssetThumbnail src={asset.imageUrl} alt="asset-image" />
 
 
                                         </div>}
+
+                                   
+                   
 
 
 
@@ -67,11 +70,15 @@ export default async function AssetsTable({ filters, page, pageSize }:
 
                                 </td>
 
-                                <td className="px-3 py-4 text-sm text-dark-500  md:table-cell">{asset.serial}</td>
-                                <td className="px-3 py-4 text-sm text-dark-500 hidden  lg:table-cell">{asset.type}</td>
-                                <td className="px-3 py-4 text-sm text-dark-500 hidden  lg:table-cell">{asset.location}</td>
-                                <td className="px-3 py-4 text-sm text-dark-500 hidden  md:table-cell">
-                                    <Link href={`/assets/${asset.id}`}>Edit</Link>
+                                <td className="md:px-3 px-2 py-4 text-sm text-dark-500  md:table-cell">{asset.serial}</td>
+
+                                <td className="md:px-3 px-2 py-4 text-xs text-dark-500 md:hidden text-center">
+                                    <Link href={`/assets/edit/${asset.id}`}>Edit</Link>
+                                </td>
+                                <td className="md:px-3 px-2 py-4 text-sm text-dark-500 hidden  lg:table-cell">{asset.type}</td>
+                                <td className="md:px-3 px-2 py-4 text-sm text-dark-500 hidden  lg:table-cell">{asset.location}</td>
+                                <td className="md:px-3 px-2 py-4 text-sm text-dark-500 hidden  md:table-cell">
+                                    <Link href={`/assets/edit/${asset.id}`}>Edit</Link>
                                 </td>
 
 

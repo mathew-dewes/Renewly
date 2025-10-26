@@ -71,7 +71,7 @@ const visablePages = getVisablePages();
                             "text-gray-700 hover:bg-gray-100 bg-white border border-gray-300"}`}>{pageNumber}</Link>
                 )
             })}
-            <Link href={getPageUrl(currentPage + 1)}
+            <Link   href={getPageUrl(currentPage + 1)}
                 className={`flex items-center px-3 py-2 text-sm font-medium rounded-lg ${currentPage >= totalPages ? "text-gray-400 cursor-not-allowed bg-gray-100" : "text-gray-700 hover:bg-gray-100 bg-white border border-gray-300"}`}
                 aria-disabled={currentPage >= totalPages}><ChevronRight />Next</Link>
         </nav>

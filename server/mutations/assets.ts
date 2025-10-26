@@ -66,23 +66,23 @@ export async function createAsset(values: z.infer<typeof assetSchema>, imageUrl:
         }
     } catch (error) {
         console.log(error);
-          if (error instanceof Prisma.PrismaClientKnownRequestError) {
-    if (error.code === "P2002") {
-              const target = (error.meta?.target as string[])?.[0] ?? "unknown field";
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            if (error.code === "P2002") {
+                const target = (error.meta?.target as string[])?.[0] ?? "unknown field";
                 const friendlyField = target === "plantNumber" ? "Plant number" : target;
-      console.log(error.meta);
-      
-    
-         return {
-            status: "error", message: `${friendlyField} must be unique. Another record already exists with that value.`,
+                console.log(error.meta);
 
+
+                return {
+                    status: "error", message: `${friendlyField} must be unique. Another record already exists with that value.`,
+
+                }
+            }
         }
-    }
-  }
 
-  throw error;
+        throw error;
 
-     
+
     }
 }
 
@@ -107,4 +107,92 @@ export async function deleteAsset(id: string) {
 
 
 
+}
+
+
+export async function updateAsset(values: z.infer<typeof assetSchema>, imageUrl: string | null, upLoadId: string | null) {
+
+    const userId = await getUserId();
+    if (!userId) {
+
+        return {
+            status: "error", message: "There was an error"
+        }
+    }
+
+    console.log(values);
+
+    
+
+
+    const { id, asset, assetType, plant, serialNumber, location, renewalType, renewalDate } = values;
+
+
+
+    try {
+
+        await prisma.asset.update({
+            data: {
+                name: asset,
+                type: assetType,
+                location: location.toUpperCase(),
+                plantNumber: plant.toUpperCase(),
+                serial: serialNumber.toUpperCase(),
+                userId,
+                imageUrl,
+                upLoadId,
+                renewals: {
+                    create: {
+                        renewalDate: new Date(renewalDate),
+                        renewalType
+
+
+                    }
+                },
+                ...(upLoadId && {
+                    upload: {
+                        connect: { id: upLoadId! }
+                    },
+
+
+                }),
+
+
+
+
+
+
+
+            },
+            where: {
+                id
+            }
+
+        });
+
+
+
+        return {
+            status: "success", message: "Post created successfully"
+        }
+    } catch (error) {
+        console.log(error);
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            if (error.code === "P2002") {
+                const target = (error.meta?.target as string[])?.[0] ?? "unknown field";
+                const friendlyField = target === "plantNumber" ? "Plant number" : target;
+                console.log(error.meta);
+
+
+                return {
+                    status: "error", message: `${friendlyField} must be unique. Another record already exists with that value.`,
+
+                }
+            }
+        }
+
+        throw error;
+
+
+    }
 }

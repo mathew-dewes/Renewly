@@ -18,6 +18,9 @@ export async function getAssets(filter: AssetType | null, page: number, pageSize
 
         },
         take:pageSize,
+        orderBy:{
+            createdAt:"desc"
+        },
         skip: (page - 1) * pageSize,
         ...(filter && {
             where: {

@@ -12,7 +12,7 @@ export default async function Navbar() {
     return (
         <nav className="flex h-20 justify-between px-10 items-center bg-blue-accent-500 text-light-500">
             <Link href={'/'}><h2>Renewly</h2></Link>
-            {session && <ul className="md:flex gap-15 hidden">
+            {session && <ul className="md:flex gap-30 hidden">
                 <NavLinks/>
                <LogoutButton/>
 
