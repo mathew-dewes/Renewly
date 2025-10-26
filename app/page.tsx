@@ -10,9 +10,9 @@ export default async function page(){
     <div>
  
       {!session ? <CallToAction/> : <Dashboard/>}
+ 
 
-
-      <div className="mt-50">
+      <div className="mt-10">
         <h1 className="text-center">Features</h1>
         <div className="flex flex-col lg:flex-row justify-center gap-30 mt-10">
           <div>
