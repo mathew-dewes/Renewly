@@ -10,13 +10,10 @@ import z from "zod"
 
 import { assetSchema } from "@/server/mutations/schemas";
 import {  updateAsset } from "@/server/mutations/assets";
-
-import { useUploadThing } from "@/server/config/uploadthing";
-import imageCompression from "browser-image-compression";
-import { options } from "@/server/config/image";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { assetTypes, locationTypes, renewalTypes } from "@/app/assets/variables/constants";
-import { ImageUploader } from "@/app/assets/add/_components/ImageUploader";
+import { Location } from "@prisma/client";
+
 import { AssetType, RenewalType } from "@prisma/client";
 const today = new Date().toISOString().split("T")[0];
 
@@ -44,16 +41,8 @@ export default function EditAssetForm({values}:
 
 
   const [serverError, setServerError] = useState("");
-  const [file, setFile] = useState<File | null>(null);
 
 
-  const { startUpload, isUploading } = useUploadThing("imageUploader", {
-    onClientUploadComplete: () => {
-      setFile(null);
-
-    },
-
-  });
 
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormFields>({ resolver: zodResolver(assetSchema),
     defaultValues:{
@@ -61,7 +50,7 @@ export default function EditAssetForm({values}:
         asset: values?.name,
         plant: values?.plantNumber,
         serialNumber: values?.serial,
-        location: values?.location,
+        location: values?.location as Location,
         assetType: values?.type,
         renewalType: values?.renewals[0].renewalType,
         renewalDate: values?.renewals[0].renewalDate
@@ -72,29 +61,8 @@ export default function EditAssetForm({values}:
 
   const onSubmit = async (values: FormFields) => {
 
-    let imageURL = null;
-    let upLoadId = null;
 
-
-    if (file) {
-
-      try {
-        const compressedFile = await imageCompression(file, options);
-        const upload = await startUpload([compressedFile]);
-        if (!upload) return;
-        imageURL = upload[0].ufsUrl;
-        upLoadId = upload[0].serverData.uploadId
-
-      } catch (error) {
-        console.log(error);
-      }
-
-
-
-
-    }
-
-    const result = await updateAsset(values, imageURL, upLoadId);
+    const result = await updateAsset(values);
     if (result?.status === "error") {
       setServerError(result.message)
       console.log(result.message);
@@ -200,8 +168,6 @@ export default function EditAssetForm({values}:
           <ErrorMessage message={errors.renewalDate?.message} />}
       </div>
 
-
-      <ImageUploader savedImage={values?.imageUrl} file={file} setFile={setFile} isUploading={isUploading} />
 
 
 

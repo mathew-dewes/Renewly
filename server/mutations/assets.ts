@@ -4,11 +4,10 @@ import z from "zod";
 import { assetSchema } from "./schemas";
 import prisma from "../db/prisma";
 import { getUserId } from "../auth/auth";
-import { hasImage } from "../queries/upload";
 import { Prisma } from "@prisma/client";
 
 
-export async function createAsset(values: z.infer<typeof assetSchema>, imageUrl: string | null, upLoadId: string | null) {
+export async function createAsset(values: z.infer<typeof assetSchema>) {
 
     const userId = await getUserId();
     if (!userId) {
@@ -29,12 +28,10 @@ export async function createAsset(values: z.infer<typeof assetSchema>, imageUrl:
             data: {
                 name: asset,
                 type: assetType,
-                location: location.toUpperCase(),
+                location: location,
                 plantNumber: plant.toUpperCase(),
                 serial: serialNumber.toUpperCase(),
                 userId,
-                imageUrl,
-                upLoadId,
                 renewals: {
                     create: {
                         renewalDate: new Date(renewalDate),
@@ -43,12 +40,7 @@ export async function createAsset(values: z.infer<typeof assetSchema>, imageUrl:
 
                     }
                 },
-                ...(upLoadId && {
-                    upload: {
-                        connect: { id: upLoadId! }
-                    }
-
-                })
+           
 
 
 
@@ -89,20 +81,12 @@ export async function createAsset(values: z.infer<typeof assetSchema>, imageUrl:
 
 export async function deleteAsset(id: string) {
 
-    const image = await hasImage(id);
-
-    if (image) {
-        const baseUrl = process.env.BASE_URL || "http://localhost:3000";
-        await fetch(`${baseUrl}/api/uploads/${id}`, { method: "DELETE" });
-    }
 
     await prisma.asset.delete({
         where: {
             id
         },
-        select: {
-            upLoadId: true
-        }
+  
     });
 
 
@@ -110,7 +94,7 @@ export async function deleteAsset(id: string) {
 }
 
 
-export async function updateAsset(values: z.infer<typeof assetSchema>, imageUrl: string | null, upLoadId: string | null) {
+export async function updateAsset(values: z.infer<typeof assetSchema>) {
 
     const userId = await getUserId();
     if (!userId) {
@@ -135,12 +119,10 @@ export async function updateAsset(values: z.infer<typeof assetSchema>, imageUrl:
             data: {
                 name: asset,
                 type: assetType,
-                location: location.toUpperCase(),
+                location: location,
                 plantNumber: plant.toUpperCase(),
                 serial: serialNumber.toUpperCase(),
                 userId,
-                imageUrl,
-                upLoadId,
                 renewals: {
                     create: {
                         renewalDate: new Date(renewalDate),
@@ -149,13 +131,7 @@ export async function updateAsset(values: z.infer<typeof assetSchema>, imageUrl:
 
                     }
                 },
-                ...(upLoadId && {
-                    upload: {
-                        connect: { id: upLoadId! }
-                    },
-
-
-                }),
+            
 
 
 

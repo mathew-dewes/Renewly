@@ -75,12 +75,10 @@ model Asset {
   id          String    @id @default(cuid())
   name        String
   type        AssetType
-  imageUrl    String?
   plantNumber String @unique
   serial      String
   renewals    Renewal[]
   location    Location
-  upload Upload?
 
   userId String
   user   User   @relation(fields: [userId], references: [id]) 
@@ -89,20 +87,6 @@ model Asset {
 
 }
 
-model Upload {
-  id        String   @id @default(cuid())
-  name      String
-  url       String
-  fileKey   String
-  fileType  String
-  fileSize  Int
-  createdAt DateTime @default(now())
-
-  assetId   String? @unique
-  asset     Asset?  @relation(fields: [assetId], references: [id], onDelete: Cascade)
-
-  @@map("uploads")
-}
 
 model Renewal {
   id          String   @id @default(cuid())

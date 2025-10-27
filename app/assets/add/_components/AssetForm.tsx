@@ -11,14 +11,15 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod"
 import ErrorMessage from "../../../../components/ui/ErrorMessage";
-import { assetTypes, locationTypes, renewalTypes } from "../../variables/constants";
+import { assetTypes, renewalTypes } from "../../variables/constants";
 import { assetSchema } from "@/server/mutations/schemas";
 import { createAsset } from "@/server/mutations/assets";
-import { ImageUploader } from "./ImageUploader";
-import { useUploadThing } from "@/server/config/uploadthing";
-import imageCompression from "browser-image-compression";
-import { options } from "@/server/config/image";
+import { Location } from "@prisma/client";
 const today = new Date().toISOString().split("T")[0];
+
+
+const locations = Object.values(Location);
+
 
 
 
@@ -30,44 +31,15 @@ export default function AssetForm() {
   const router = useRouter();
 
   const [serverError, setServerError] = useState("");
-  const [file, setFile] = useState<File | null>(null);
 
 
-  const { startUpload, isUploading } = useUploadThing("imageUploader", {
-    onClientUploadComplete: () => {
-      setFile(null);
-
-    },
-
-  });
 
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormFields>({ resolver: zodResolver(assetSchema), });
 
   const onSubmit = async (values: FormFields) => {
 
-    let imageURL = null;
-    let upLoadId = null;
 
-
-    if (file) {
-
-      try {
-        const compressedFile = await imageCompression(file, options);
-        const upload = await startUpload([compressedFile]);
-        if (!upload) return;
-        imageURL = upload[0].ufsUrl;
-        upLoadId = upload[0].serverData.uploadId
-
-      } catch (error) {
-        console.log(error);
-      }
-
-
-
-
-    }
-
-    const result = await createAsset(values, imageURL, upLoadId);
+    const result = await createAsset(values);
     if (result?.status === "error") {
       setServerError(result.message)
       console.log(result.message);
@@ -128,14 +100,14 @@ export default function AssetForm() {
 
         <select {...register("location")} className="border p-1 bg-white rounded cursor-pointer">
 
-          {locationTypes?.map((type, key) => (
+          {locations?.map((type, key) => (
             <option className="text-black" key={key} value={type}>
               {type}
             </option>
           ))}
         </select>
         {errors.location &&
-          <ErrorMessage message={errors.location?.message} />}
+          <ErrorMessage message={errors.location?.message as string} />}
       </div>
 
       <div className="flex flex-col gap-2 w-full md:w-1/2">
@@ -173,9 +145,6 @@ export default function AssetForm() {
         {errors.renewalDate &&
           <ErrorMessage message={errors.renewalDate?.message} />}
       </div>
-
-
-      <ImageUploader file={file} setFile={setFile} isUploading={isUploading} />
 
 
 
