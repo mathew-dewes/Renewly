@@ -1,7 +1,8 @@
 
 import { getSession } from "@/server/auth/auth";
 import CallToAction from "./(home)/_components/CallToAction";
-import Dashboard from "./(home)/_components/Dashboard";
+import Features from "./(home)/_components/Featues";
+import Charts from "@/components/Charts";
 
 export default async function page(){
 
@@ -9,27 +10,20 @@ export default async function page(){
   return(
     <div>
  
-      {!session ? <CallToAction/> : <Dashboard/>}
- 
+      {!session ? <CallToAction/> : 
+      <div className="flex">
+<main className="grow">
+        <Charts/>
+
+      </main>
+      </div>
+      
+    }
 
       <div className="mt-10">
         <h1 className="text-center">Features</h1>
-        <div className="flex flex-col lg:flex-row justify-center gap-30 mt-10">
-          <div>
-            <h2>Renewal Reminders</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sit explicabo cumque ea commodi maxime?</p>
-          </div>
-          <div>
-            <h2>Asset Tracking</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sit explicabo cumque ea commodi maxime?</p>
-          </div>
-          <div>
-            <h2>Renewal Reminders</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sit explicabo cumque ea commodi maxime?</p>
-          </div>
+        {!session && <Features/>}
      
-          
-        </div>
       </div>
 
     </div>

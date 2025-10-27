@@ -12,7 +12,7 @@ export default function Dashboard(){
    
 <div className="flex gap-10 flex-wrap">
  
-<AssetMetrics/>
+
 
 
 <div className="bg-gray-50 p-5 rounded-xl mt-10">
