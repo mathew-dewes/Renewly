@@ -79,8 +79,7 @@ model Asset {
   plantNumber String @unique
   serial      String
   renewals    Renewal[]
-  location    String
-  upLoadId String? @unique
+  location    Location
   upload Upload?
 
   userId String
@@ -113,6 +112,14 @@ model Renewal {
   assetId     String
   renewalType RenewalType
   asset       Asset    @relation(fields: [assetId], references: [id], onDelete: Cascade)
+}
+
+enum Location {
+  AUCKLAND
+  HAMILTON
+  WELLINGTON
+  CHRISTCHURCH
+  DUNEDIN
 }
 
 

@@ -11,7 +11,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod"
 import ErrorMessage from "../../../../components/ui/ErrorMessage";
-import { assetTypes, renewalTypes } from "../../variables/constants";
+import { assetTypes, locationTypes, renewalTypes } from "../../variables/constants";
 import { assetSchema } from "@/server/mutations/schemas";
 import { createAsset } from "@/server/mutations/assets";
 import { ImageUploader } from "./ImageUploader";
@@ -122,16 +122,18 @@ export default function AssetForm() {
         {errors.serialNumber &&
           <ErrorMessage message={errors.serialNumber?.message} />}
       </div>
-      <div>
-        <label htmlFor="title" className="block mb-2 text-sm font-medium">
-          Location
-        </label>
-        <input {...register("location")}
-          type="text"
-          id="title"
-          className={`bg-gray-50 border uppercase border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
 
-        />
+       <div className="flex flex-col gap-2 w-full md:w-1/2">
+        <label>Location</label>
+
+        <select {...register("location")} className="border p-1 bg-white rounded cursor-pointer">
+
+          {locationTypes?.map((type, key) => (
+            <option className="text-black" key={key} value={type}>
+              {type}
+            </option>
+          ))}
+        </select>
         {errors.location &&
           <ErrorMessage message={errors.location?.message} />}
       </div>
