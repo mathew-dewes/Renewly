@@ -22,7 +22,7 @@
 @layer base {
 
   p,  td {
-    @apply font-light text-sm md:text-base whitespace-nowrap
+    @apply font-light text-sm md:text-base
   }
 
   h1{

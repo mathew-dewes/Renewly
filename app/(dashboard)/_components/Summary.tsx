@@ -1,8 +1,21 @@
+import { SummaryLocations } from "./charts/SummaryLocations";
+
 export default function Summary(){
     return (
         <div>
-            <h2>Summary</h2>
-            <p>Lorem ipsum dolor sit amet.</p>
+            <h2>Monthly Summary</h2>
+
+            <div className="mt-2">
+                <p>Renewals: 20</p>
+                <div className="h-30 mt-5">
+                    <p className="font-semibold">Renewals by locations</p>
+     
+          
+        <SummaryLocations/>
+           
+          
+                </div>
+            </div>
         </div>
     )
 }

@@ -7,17 +7,17 @@ import UpcomingReminders from "./UpcomingReminders";
 export default function Dashboard(){
     return (
         <>
-        <section className="grid gap-4 px-4 grid-cols-1  xl:grid-cols-3">
-        <div className="p-8 h-[300px] bg-gray-50  shadow rounded">
-           <RenewalHealth/>
-        </div>
-        <div className="p-8 h-[300px] bg-gray-50  shadow rounded">
-           <UpcomingReminders/>
-        </div>
-        <div className="p-8 h-[300px] bg-gray-50  shadow rounded">
-            <Summary/>
-        </div>
-        </section>
+<section className="grid gap-4 px-4 grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3">
+  <div className="p-8 h-[500px] md:h-[350px] bg-gray-50 shadow rounded">
+    <RenewalHealth/>
+  </div>
+  <div className="p-8 h-[350px] bg-gray-50 shadow rounded">
+    <UpcomingReminders/>
+  </div>
+  <div className="p-8 h-[350px] bg-gray-50 shadow rounded">
+    <Summary/>
+  </div>
+</section>
         <section className="grid gap-4 px-4 py-4">
         <div className="h-[300px] bg-gray-50  shadow rounded grid xl:grid-cols-3">
             <div className="col-span-2 p-8">

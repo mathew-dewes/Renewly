@@ -13,8 +13,8 @@ export default async function page(){
     <div>
  
       {!session ? <CallToAction/> : 
-      <div className="flex">
-<main className="grow">
+      <div className="flex flex-col">
+<main className="w-full">
 <Dashboard/>
 
       </main>
