@@ -1,7 +1,5 @@
 "use client";
 
-import AssetTypePie from "@/app/(dashboard)/_components/PieCharts/AssetTypePie";
-import RenewalHealthBar from "@/app/(dashboard)/_components/PieCharts/RenewalHealth";
 import AreaChartPlot from "@/app/(dashboard)/_components/plots/AreaChartPlot";
 import BarChartPlot from "@/app/(dashboard)/_components/plots/BarChartPlot";
 import LineChartPlot from "@/app/(dashboard)/_components/plots/LineChartPlot";

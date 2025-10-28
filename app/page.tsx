@@ -2,7 +2,9 @@
 import { getSession } from "@/server/auth/auth";
 import CallToAction from "./(home)/_components/CallToAction";
 import Features from "./(home)/_components/Featues";
-import Charts from "@/components/Charts";
+import Dashboard from "./(dashboard)/_components/Dashboard";
+
+
 
 export default async function page(){
 
@@ -13,7 +15,7 @@ export default async function page(){
       {!session ? <CallToAction/> : 
       <div className="flex">
 <main className="grow">
-        <Charts/>
+<Dashboard/>
 
       </main>
       </div>
