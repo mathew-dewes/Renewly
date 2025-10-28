@@ -13,7 +13,6 @@ export async function getAssets(filter: AssetType | null, page: number, pageSize
             serial: true,
             type: true,
             location: true,
-            imageUrl: true
 
 
         },
@@ -46,7 +45,7 @@ export async function getAsset(id: string) {
             serial: true,
             type: true,
             location: true,
-            imageUrl: true
+     
 
 
         },

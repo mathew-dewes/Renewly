@@ -1,6 +1,4 @@
 
-import AssetThumbnail from "@/components/ui/images/AssetThumbnail";
-
 import { getAssets } from "@/server/queries/assets";
 import { AssetType } from "@prisma/client";
 import Link from "next/link"
@@ -53,18 +51,7 @@ export default async function AssetsTable({ filters, page, pageSize }:
 
                                 <td className="px-3 py-4 text-sm text-dark-500  md:table-cell">{asset.plantNumber}</td>
                                 <td className="px-3 py-4 h-20 text-sm text-dark-500  md:table-cell">
-                                    <div className="flex gap-2 items-center">
-                                        {asset.imageUrl && <div className="overflow-hidden rounded-full">
-                                            <AssetThumbnail src={asset.imageUrl} alt="asset-image" />
-
-
-                                        </div>}
-
-                                   
-                   
-
-
-
+                                    <div>
                                         <div className="font-medium">{asset.name}</div>
                                     </div>
 
