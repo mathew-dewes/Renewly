@@ -12,7 +12,7 @@ export async function getRenewals(){
                     plantNumber:true,
                     name:true,
                     location:true,
-                    imageUrl:true
+              
                 }
             },
             renewalType: true,
