@@ -8,7 +8,7 @@ export default function Summary(){
             <div className="mt-2">
                 <p>Renewals: 20</p>
                 <div className="h-30 mt-5">
-                    <p className="font-semibold">Renewals by locations</p>
+                    <p className="font-semibold">Renewals by type and location</p>
      
           
         <SummaryLocations/>

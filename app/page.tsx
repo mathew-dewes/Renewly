@@ -6,7 +6,14 @@ import Dashboard from "./(dashboard)/_components/Dashboard";
 
 
 
-export default async function page(){
+export default async function page({ searchParams }:
+    { searchParams: Promise<{filter?: string}> }
+){
+
+      const params = await searchParams;
+      const filter = params.filter
+ 
+      
 
   const session = await getSession();
   return(
@@ -15,7 +22,7 @@ export default async function page(){
       {!session ? <CallToAction/> : 
       <div className="flex flex-col">
 <main className="w-full">
-<Dashboard/>
+<Dashboard filter={filter || "month"}/>
 
       </main>
       </div>

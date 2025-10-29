@@ -25,7 +25,6 @@ type assetValues = {
     serial: string,
     location: string
     type: AssetType,
-    imageUrl: string | null,
     renewals:{
         renewalType:RenewalType, renewalDate: Date
     }[]

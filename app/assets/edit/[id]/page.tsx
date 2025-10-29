@@ -20,7 +20,7 @@ export default async function page({params}:
                 serial: true,
                 location:true,
                 type:true,
-                imageUrl:true,
+        
                 renewals:{
                     select:{
                         renewalType: true,

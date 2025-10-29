@@ -1,20 +1,11 @@
 "use client"
 
-import { useEffect, useState } from "react";
+
 import { Bar, BarChart, CartesianGrid, Legend, Rectangle, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
-export  function SummaryLocations(){
-        const [mounted, setMounted] = useState(false);
-  
-  
-    useEffect(() => {
-      const t = setTimeout(() => setMounted(true), 0);
-      return () => clearTimeout(t);
-    }, []);
-  
-    if (!mounted) return null;
+export default function AssetTypesChart(){
 
-    const data = [
+        const data = [
   {
     name: 'AKL',
     equipment: 4000,
@@ -33,24 +24,13 @@ export  function SummaryLocations(){
     machinery: 9800,
     vehciles: 2290,
   },
-  {
-    name: 'CHCH',
-    equipment: 2780,
-    machinery: 3908,
-    vehciles: 2000,
-  },
-  {
-    name: 'DUN',
-    equipment: 1890,
-    machinery: 4800,
-    vehciles: 2181,
-  },
+
 
 ];
     return (
-        <div className="h-[150px]  min-w-0 min-h-0  mt-2">
-            <ResponsiveContainer width="100%" height="100%" aspect={undefined} >
-   <BarChart
+        <div className="h-[150px] mt-2">
+            <ResponsiveContainer width={"100%"} height={"100%"}>
+ <BarChart
 
 
       data={data}
@@ -67,8 +47,6 @@ export  function SummaryLocations(){
       <Tooltip />
       <Legend />
       <Bar dataKey="vehciles" fill="#00C49F" activeBar={<Rectangle stroke="blue" />} />
-      <Bar dataKey="machinery" fill="#FFBB28" activeBar={<Rectangle stroke="purple" />} />
-      <Bar dataKey="equipment" fill="#33ccff" activeBar={<Rectangle stroke="green" />} />
 
     </BarChart>
             </ResponsiveContainer>
