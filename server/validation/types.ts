@@ -1,6 +1,3 @@
-export type Upload = {
-  id: string;
-  name: string;
-  url: string;
-  fileType: string;
-};
+import { timeFrames } from "@/app/assets/variables/constants";
+
+export type TimeFrame = (typeof timeFrames)[number];

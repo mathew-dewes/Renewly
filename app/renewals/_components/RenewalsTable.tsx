@@ -10,6 +10,9 @@ export default async function RenewalsTable(){
 
     const renewals = await getRenewals();
 
+    console.log(renewals);
+    
+
 
          if (renewals.length === 0){
             return <p className="mt-10 font-medium">There are no renewals at this time. Please try again later</p>

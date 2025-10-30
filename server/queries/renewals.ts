@@ -2,6 +2,7 @@
 
 import { AssetType } from "@prisma/client";
 import prisma from "../db/prisma";
+import { TimeFrame } from "../validation/types";
 
 
 export async function getRenewals(){
@@ -100,33 +101,87 @@ export async function getNext14DaysData() {
 }
 
 
-export async function getQuartlyForcast(type: AssetType){
-    const today = new Date();
+export async function getRenewalForcast(type: AssetType, range:TimeFrame ){
+    
+  const today = new Date();
+  const timeFrame = new Date();
+  let limit = 0;
+  let milseconds: number;
+  let increment = 0;
 
-  const threeMonths = new Date();
-  threeMonths.setMonth(today.getMonth() + 3);
 
-  const renewalData: {
-  weekStart: Date;
-  renewals: number;
 
-}[] = [];
+switch(range){
+  case "weekly":
+    timeFrame.setDate(today.getDate() + 7);
+    timeFrame.setHours(23, 59, 59, 999);
+    limit = 7;
+    milseconds = 1000 * 60 * 60 * 24;
+    increment = 1;
+    break;
 
-for (let i = 0; i < 28; i++) {
+    case "monthly":
+    timeFrame.setDate(today.getDate() + 28);
+    timeFrame.setHours(23, 59, 59, 999);
+    limit = 28;
+    milseconds = 1000 * 60 * 60 * 24;
+     increment = 1;
+
+      break;
+
+    case "fornightly":
+    timeFrame.setDate(today.getDate() + 14);
+    timeFrame.setHours(23, 59, 59, 999);
+    limit = 14;
+    milseconds = 1000 * 60 * 60 * 24;
+     increment = 1;
+
+      break;
+
+
+  case "quarterly":
+    timeFrame.setMonth(today.getMonth() + 3);
+    timeFrame.setHours(23, 59, 59, 999);
+    limit = 12;
+    milseconds = 1000 * 60 * 60 * 24 * 7;
+    increment = 7;
+    break;
+
+        case "biannually":
+    timeFrame.setMonth(today.getMonth() + 6);
+    timeFrame.setHours(23, 59, 59, 999);
+    limit = 12;
+    milseconds = 1000 * 60 * 60 * 24 * 14;
+    increment = 14;
+
+      break;
+        case "annually":
+    timeFrame.setMonth(today.getMonth() + 12);
+    timeFrame.setHours(23, 59, 59, 999);
+    limit = 12;
+    milseconds = 1000 * 60 * 60 * 24 * 30;
+    increment = 30;
+
+      break;
+
+
+}
+
+  const renewalData: { weekStart: Date; renewals: number; }[] = [];
+
+for (let i = 0; i < limit; i++) {
   const weekStart = new Date(today);
-  weekStart.setDate(today.getDate() + i * 7);
+    weekStart.setDate(today.getDate() + i * increment);
 
-  renewalData.push({
-    weekStart,
-    renewals: 0
-  });
+  renewalData.push({ weekStart, renewals: 0});
 }
 
 
   const data = await prisma.renewal.findMany({
     where:{
       renewalDate:{
-        lte: threeMonths
+          gte: today,
+        lte: timeFrame,
       },
       asset:{
         type
@@ -143,12 +198,13 @@ for (let i = 0; i < 28; i++) {
     }
   });
 
+
 data.forEach((r) => {
   const weekIndex = Math.floor(
-    (r.renewalDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24 * 7)
+    (r.renewalDate.getTime() - today.getTime()) / milseconds
   );
 
-  if (weekIndex >= 0 && weekIndex < 28) {
+  if (weekIndex >= 0 && weekIndex < limit) {
     renewalData[weekIndex].renewals += 1;
   }
 });

@@ -36,7 +36,7 @@ export default function RenewalPie() {
 
                     <Pie
 
-
+                        isAnimationActive={false}
                         data={data}
                         cx="50%"
                         cy="50%"

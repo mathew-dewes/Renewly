@@ -4,21 +4,18 @@ import CallToAction from "./(home)/_components/CallToAction";
 import Features from "./(home)/_components/Featues";
 import Dashboard from "./(dashboard)/_components/Dashboard";
 import { AssetType } from "@prisma/client";
-
+import { TimeFrame } from "@/server/validation/types";
 
 
 export default async function page({
   searchParams,
 }: {
-  searchParams: Promise<{ [key: string]: AssetType | undefined }>
+  searchParams: Promise<{ [key: string]: string | undefined }>
 }){
 
 
-  const type = (await searchParams).type;
-
-  console.log(type);
-  
-  
+  const type = (await searchParams).type as AssetType | undefined;
+  const range = (await searchParams).range as TimeFrame | undefined;
       
 
   const session = await getSession();
@@ -28,7 +25,7 @@ export default async function page({
       {!session ? <CallToAction/> : 
       <div className="flex flex-col">
 
-<Dashboard filter={type || "EQUIPMENT"}/>
+<Dashboard type={type || "EQUIPMENT"} range={range || "fornightly"}/>
 
    
       </div>
