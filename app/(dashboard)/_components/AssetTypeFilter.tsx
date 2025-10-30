@@ -2,21 +2,22 @@
 
 import { useState } from "react";
 
-import { timeFrameTypes } from "@/app/assets/variables/constants";
+import { assetTypes } from "@/app/assets/variables/constants";
+import { usePathname, useRouter } from "next/navigation";
+import { AssetType } from "@prisma/client";
 
 
-export default function DateFilter({ filter, setFilter }:
-  { filter?: string, setFilter: React.Dispatch<React.SetStateAction<string>> }
+export default function AssetTypeFilter({filter}:
+  {filter: AssetType}
 ) {
   const [isOpen, setIsOpen] = useState(false);
-
+  const pathname = usePathname();
+  const router = useRouter();
 
 
   const updateTypeParam = (type: string) => {
-
-    setFilter(type)
     setIsOpen(false);
-
+   router.push(`${pathname}?type=${type}`);
     
   };
 
@@ -50,7 +51,7 @@ export default function DateFilter({ filter, setFilter }:
         <div className="absolute left-0 w-fit p-2 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow-sm z-10">
           <ul className="py-2 text-sm font-semibold text-dark-500">
 
-            {timeFrameTypes.map((type, key) => {
+            {assetTypes.map((type, key) => {
 
               return (
                 <li onClick={() => updateTypeParam(type)} className="block px-4 rounded-lg py-2 hover:bg-gray-100 font-base font-medium dark:hover:bg-gray-600 hover:text-white" key={key}>

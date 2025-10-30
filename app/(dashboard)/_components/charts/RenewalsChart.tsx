@@ -5,22 +5,13 @@ import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YA
 
 
 
-type RenewalData = {
-  date: number;
-  equipment: number;
-  machinery: number;
-  vehicles: number;
-};
 
-
-
-export default function RenewalsChart({data, filter}:
-  {data:RenewalData[], filter: string}
-){
+export default function RenewalsChart({data}:{
+  data:{weekStart: Date, renewals: number}[]
+}){
          const [mounted, setMounted] = useState(false);
-  
 
-
+ 
     
       useEffect(() => {
         const t = setTimeout(() => setMounted(true), 0);
@@ -39,26 +30,26 @@ export default function RenewalsChart({data, filter}:
     >
       <CartesianGrid strokeDasharray="3 3" />
 <XAxis
-  dataKey="date"
-  type="category"
+  dataKey="weekStart"
+  type="number"
+  domain={['dataMin', 'dataMax']}
   tickFormatter={(timestamp) => {
     const d = new Date(timestamp);
-    if (filter === "monthly") {
-      return `${d.getDate()}/${d.getMonth() + 1}`;
-    } else if (filter === "quarterly") {
-      return `W${Math.ceil((d.getDate() + d.getMonth() * 30) / 7)}`;
-    } else {
-      return d.toLocaleString("default", { month: "short" });
-    }
+    return d.toLocaleDateString("default", { month: "short", day: "numeric" });
   }}
 />
       <YAxis width="auto" />
 
-      <Tooltip />
+<Tooltip
+  formatter={(value) => value} // keep the renewals as-is
+  labelFormatter={(label) => {
+    const d = new Date(label);
+    return d.toLocaleDateString("default", { month: "short", day: "numeric" });
+  }}
+/>
 
-        <Area type="monotone" dataKey="equipment" stackId="1" stroke="#8884d8" fill="#8884d8" />
-      <Area type="monotone" dataKey="machinery" stackId="1" stroke="#82ca9d" fill="#82ca9d" />
-      <Area type="monotone" dataKey="vehicles" stackId="1" stroke="#ffc658" fill="#ffc658" />
+        <Area type="monotone" dataKey="renewals" stroke="#8884d8" fill="#8884d8" />
+
     </AreaChart>
             </ResponsiveContainer>
 

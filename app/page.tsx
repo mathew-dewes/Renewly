@@ -3,16 +3,22 @@ import { getSession } from "@/server/auth/auth";
 import CallToAction from "./(home)/_components/CallToAction";
 import Features from "./(home)/_components/Featues";
 import Dashboard from "./(dashboard)/_components/Dashboard";
+import { AssetType } from "@prisma/client";
 
 
 
-export default async function page({ searchParams }:
-    { searchParams: Promise<{filter?: string}> }
-){
+export default async function page({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: AssetType | undefined }>
+}){
 
-      const params = await searchParams;
-      const filter = params.filter
- 
+
+  const type = (await searchParams).type;
+
+  console.log(type);
+  
+  
       
 
   const session = await getSession();
@@ -21,19 +27,25 @@ export default async function page({ searchParams }:
  
       {!session ? <CallToAction/> : 
       <div className="flex flex-col">
-<main className="w-full">
-<Dashboard filter={filter || "month"}/>
 
-      </main>
+<Dashboard filter={type || "EQUIPMENT"}/>
+
+   
       </div>
       
     }
 
-      <div className="mt-10">
+ 
+
+        {!session && 
+        <div className="mt-40">
         <h1 className="text-center">Features</h1>
-        {!session && <Features/>}
+            <Features/>
+        </div>
+        
+    }
      
-      </div>
+
 
     </div>
 

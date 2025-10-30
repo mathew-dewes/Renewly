@@ -28,13 +28,14 @@ export default function RenewalPie() {
 
 
     return (
-        <div className="w-[250px] h-[200px] min-w-0 min-h-0">
+        <div className="lg:w-[350px] mt-5 w-[250px] h-[200px] min-w-0 min-h-0">
             <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
             
              
 
                     <Pie
+
 
                         data={data}
                         cx="50%"
@@ -45,6 +46,7 @@ export default function RenewalPie() {
 
 
                     >
+                  
                         <LabelList formatter={(label) =>
                             `${typeof label === "number" ? label : Number(label)}%`
                         } position="outside" offset={10} dataKey={"value"} fill="black" />
@@ -55,6 +57,13 @@ export default function RenewalPie() {
                     </Pie>
                 </PieChart>
             </ResponsiveContainer>
+      
+          
+           
+      
+               
+            
+     
         </div>
     );
 }
