@@ -43,7 +43,7 @@ export default function RegisterForm() {
     
                 <label className="block mb-2 text-sm font-medium">Your name</label>
                 <input {...register("name")}  type="text" id="email" className="bg-gray-50 border border-gray-300 text-sm rounded-lg  block w-full p-2.5"
-                    placeholder="John-smith" />
+                    placeholder="First and last name" />
                               {errors.name &&
                     <ErrorMessage message={errors.name?.message} />}
                 

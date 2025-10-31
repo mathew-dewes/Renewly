@@ -1,52 +1,189 @@
 "use server";
 
-import { AssetType } from "@prisma/client";
+import { AssetType, Location, RenewalType } from "@prisma/client";
 import prisma from "../db/prisma";
 import { TimeFrame } from "../validation/types";
 
+  const today = new Date();
+  const timeFrame = new Date();
 
-export async function getRenewals(){
-    return await prisma.renewal.findMany({
-        select:{
-            id: true,
-            asset:{
-                select:{
-                    plantNumber:true,
-                    name:true,
-                    location:true,
-              
-                }
-            },
-            renewalType: true,
-            renewalDate:true
 
-        },
-        take:10,
-        orderBy:{
-            renewalDate:"asc"
+export async function getRenewals(location: Location | null, type: RenewalType | null, time: string | null,  page: number, pageSize:number) {
+
+
+  switch (time) {
+    case "weekly":
+      timeFrame.setDate(today.getDate() + 7);
+      timeFrame.setHours(23, 59, 59, 999);
+
+      break;
+
+    case "monthly":
+      timeFrame.setDate(today.getDate() + 28);
+      timeFrame.setHours(23, 59, 59, 999);
+
+
+      break;
+
+    case "fornightly":
+      timeFrame.setDate(today.getDate() + 14);
+      timeFrame.setHours(23, 59, 59, 999);
+
+
+      break;
+
+
+    case "quarterly":
+      timeFrame.setMonth(today.getMonth() + 3);
+      timeFrame.setHours(23, 59, 59, 999);
+
+      break;
+
+    case "biannually":
+      timeFrame.setMonth(today.getMonth() + 6);
+      timeFrame.setHours(23, 59, 59, 999);
+
+      break;
+    case "annually":
+      timeFrame.setMonth(today.getMonth() + 12);
+      timeFrame.setHours(23, 59, 59, 999);
+
+
+      break;
+
+
+  }
+
+
+  return await prisma.renewal.findMany({
+    select: {
+      id: true,
+      asset: {
+        select: {
+          plantNumber: true,
+          name: true,
+          location: true,
+
         }
-    });
+      },
+      renewalType: true,
+      renewalDate: true
+
+    },
+    take: pageSize,
+    skip: (page - 1) * pageSize,
+    orderBy: {
+      renewalDate: "asc"
+    },
+    where: {
+      ...(location && {
+        asset: { location: { equals: location } }
+      }),
+      ...(type && {
+        renewalType: { equals: type }
+      }),
+
+      ...(time && {
+        renewalDate: {
+          gte: today,
+          lte: timeFrame,
+        }
+      }
+      ),
+
+    }
+
+  });
 }
 
 
-export async function getLatestRenewals(){
-    return await prisma.renewal.findMany({
-        select:{
-            id:true,
-            asset:{
-                select:{
-                    name:true,
-                    location:true,
-                    plantNumber:true,
-                }
-            },
-            renewalDate:true
-        },
-        take:5,
-        orderBy:{
-            renewalDate:"asc"
+export async function renewalCount(location: Location | null, type: RenewalType | null, time: string | null){
+   const today = new Date();
+  const timeFrame = new Date();
+
+  switch (time) {
+    case "weekly":
+      timeFrame.setDate(today.getDate() + 7);
+      timeFrame.setHours(23, 59, 59, 999);
+
+      break;
+
+    case "monthly":
+      timeFrame.setDate(today.getDate() + 28);
+      timeFrame.setHours(23, 59, 59, 999);
+
+
+      break;
+
+    case "fornightly":
+      timeFrame.setDate(today.getDate() + 14);
+      timeFrame.setHours(23, 59, 59, 999);
+
+
+      break;
+
+
+    case "quarterly":
+      timeFrame.setMonth(today.getMonth() + 3);
+      timeFrame.setHours(23, 59, 59, 999);
+
+      break;
+
+    case "biannually":
+      timeFrame.setMonth(today.getMonth() + 6);
+      timeFrame.setHours(23, 59, 59, 999);
+
+      break;
+    case "annually":
+      timeFrame.setMonth(today.getMonth() + 12);
+      timeFrame.setHours(23, 59, 59, 999);
+
+
+      break;
+
+
+  }
+
+   return await prisma.renewal.count({
+      where: {
+      ...(location && {
+        asset: { location: { equals: location } }
+      }),
+      ...(type && {
+        renewalType: { equals: type }
+      }),
+
+      ...(time && {
+        renewalDate: {
+          gte: today,
+          lte: timeFrame,
         }
-    })
+      }
+      ),
+
+    }
+   });
+}
+
+
+export async function getLatestRenewals() {
+  return await prisma.renewal.findMany({
+    select: {
+      id: true,
+      asset: {
+        select: {
+          name: true,
+          location: true,
+          plantNumber: true,
+        }
+      },
+      renewalDate: true
+    },
+    take: 5,
+    orderBy: {
+      renewalDate: "asc"
+    }
+  })
 }
 
 
@@ -101,8 +238,8 @@ export async function getNext14DaysData() {
 }
 
 
-export async function getRenewalForcast(type: AssetType, range:TimeFrame ){
-    
+export async function getRenewalForcast(type: AssetType, range: TimeFrame) {
+
   const today = new Date();
   const timeFrame = new Date();
   let limit = 0;
@@ -111,105 +248,105 @@ export async function getRenewalForcast(type: AssetType, range:TimeFrame ){
 
 
 
-switch(range){
-  case "weekly":
-    timeFrame.setDate(today.getDate() + 7);
-    timeFrame.setHours(23, 59, 59, 999);
-    limit = 7;
-    milseconds = 1000 * 60 * 60 * 24;
-    increment = 1;
-    break;
+  switch (range) {
+    case "weekly":
+      timeFrame.setDate(today.getDate() + 7);
+      timeFrame.setHours(23, 59, 59, 999);
+      limit = 7;
+      milseconds = 1000 * 60 * 60 * 24;
+      increment = 1;
+      break;
 
     case "monthly":
-    timeFrame.setDate(today.getDate() + 28);
-    timeFrame.setHours(23, 59, 59, 999);
-    limit = 28;
-    milseconds = 1000 * 60 * 60 * 24;
-     increment = 1;
+      timeFrame.setDate(today.getDate() + 28);
+      timeFrame.setHours(23, 59, 59, 999);
+      limit = 28;
+      milseconds = 1000 * 60 * 60 * 24;
+      increment = 1;
 
       break;
 
     case "fornightly":
-    timeFrame.setDate(today.getDate() + 14);
-    timeFrame.setHours(23, 59, 59, 999);
-    limit = 14;
-    milseconds = 1000 * 60 * 60 * 24;
-     increment = 1;
+      timeFrame.setDate(today.getDate() + 14);
+      timeFrame.setHours(23, 59, 59, 999);
+      limit = 14;
+      milseconds = 1000 * 60 * 60 * 24;
+      increment = 1;
 
       break;
 
 
-  case "quarterly":
-    timeFrame.setMonth(today.getMonth() + 3);
-    timeFrame.setHours(23, 59, 59, 999);
-    limit = 12;
-    milseconds = 1000 * 60 * 60 * 24 * 7;
-    increment = 7;
-    break;
-
-        case "biannually":
-    timeFrame.setMonth(today.getMonth() + 6);
-    timeFrame.setHours(23, 59, 59, 999);
-    limit = 12;
-    milseconds = 1000 * 60 * 60 * 24 * 14;
-    increment = 14;
-
-      break;
-        case "annually":
-    timeFrame.setMonth(today.getMonth() + 12);
-    timeFrame.setHours(23, 59, 59, 999);
-    limit = 12;
-    milseconds = 1000 * 60 * 60 * 24 * 30;
-    increment = 30;
-
+    case "quarterly":
+      timeFrame.setMonth(today.getMonth() + 3);
+      timeFrame.setHours(23, 59, 59, 999);
+      limit = 12;
+      milseconds = 1000 * 60 * 60 * 24 * 7;
+      increment = 7;
       break;
 
+    case "biannually":
+      timeFrame.setMonth(today.getMonth() + 6);
+      timeFrame.setHours(23, 59, 59, 999);
+      limit = 12;
+      milseconds = 1000 * 60 * 60 * 24 * 14;
+      increment = 14;
 
-}
+      break;
+    case "annually":
+      timeFrame.setMonth(today.getMonth() + 12);
+      timeFrame.setHours(23, 59, 59, 999);
+      limit = 12;
+      milseconds = 1000 * 60 * 60 * 24 * 30;
+      increment = 30;
+
+      break;
+
+
+  }
 
   const renewalData: { weekStart: Date; renewals: number; }[] = [];
 
-for (let i = 0; i < limit; i++) {
-  const weekStart = new Date(today);
+  for (let i = 0; i < limit; i++) {
+    const weekStart = new Date(today);
     weekStart.setDate(today.getDate() + i * increment);
 
-  renewalData.push({ weekStart, renewals: 0});
-}
+    renewalData.push({ weekStart, renewals: 0 });
+  }
 
 
   const data = await prisma.renewal.findMany({
-    where:{
-      renewalDate:{
-          gte: today,
+    where: {
+      renewalDate: {
+        gte: today,
         lte: timeFrame,
       },
-      asset:{
+      asset: {
         type
       }
     },
-    select:{
-      renewalType:true,
-      renewalDate:true,
-      asset:{
-        select:{
-          name:true
+    select: {
+      renewalType: true,
+      renewalDate: true,
+      asset: {
+        select: {
+          name: true
         }
       }
     }
   });
 
 
-data.forEach((r) => {
-  const weekIndex = Math.floor(
-    (r.renewalDate.getTime() - today.getTime()) / milseconds
-  );
+  data.forEach((r) => {
+    const weekIndex = Math.floor(
+      (r.renewalDate.getTime() - today.getTime()) / milseconds
+    );
 
-  if (weekIndex >= 0 && weekIndex < limit) {
-    renewalData[weekIndex].renewals += 1;
-  }
-});
+    if (weekIndex >= 0 && weekIndex < limit) {
+      renewalData[weekIndex].renewals += 1;
+    }
+  });
 
-return renewalData
+  return renewalData
 }
 
 

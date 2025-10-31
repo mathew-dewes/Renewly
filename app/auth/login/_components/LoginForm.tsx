@@ -21,7 +21,10 @@ export default function LoginForm() {
 
 
     const { register, handleSubmit, formState: { errors, isSubmitting } } =
-        useForm<FormFields>({ resolver: zodResolver(loginUserSchema) });
+        useForm<FormFields>({ resolver: zodResolver(loginUserSchema), defaultValues:{
+            email: "renewly@admin.com",
+            password:"12345678"
+        } });
 
     const onSubmit = async (values: FormFields) => {
         const result = await loginUser(values)

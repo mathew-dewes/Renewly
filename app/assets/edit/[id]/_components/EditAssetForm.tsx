@@ -11,7 +11,7 @@ import z from "zod"
 import { assetSchema } from "@/server/mutations/schemas";
 import {  updateAsset } from "@/server/mutations/assets";
 import ErrorMessage from "@/components/ui/ErrorMessage";
-import { assetTypes, locationTypes, renewalTypes } from "@/app/assets/variables/constants";
+import { assetTypes, Locations, renewalTypes } from "@/app/assets/variables/constants";
 import { Location } from "@prisma/client";
 
 import { AssetType, RenewalType } from "@prisma/client";
@@ -121,7 +121,7 @@ export default function EditAssetForm({values}:
      
              <select {...register("location")} className="border p-1 bg-white rounded cursor-pointer">
      
-               {locationTypes?.map((type, key) => (
+               {Locations?.map((type, key) => (
                  <option className="text-black" key={key} value={type}>
                    {type}
                  </option>

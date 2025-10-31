@@ -1,21 +1,18 @@
 
 import { getRenewals } from "@/server/queries/renewals";
+import {Location, RenewalType } from "@prisma/client";
 import Link from "next/link";
 
 
+export default async function RenewalsTable({location, renewalType, time, page, pageSize}:
+    {location: Location | null, renewalType: RenewalType | null, time: string | null,  page: number, pageSize: number}
+){
 
-
-
-export default async function RenewalsTable(){
-
-    const renewals = await getRenewals();
-
-    console.log(renewals);
-    
+    const renewals = await getRenewals(location, renewalType, time, page, pageSize);
 
 
          if (renewals.length === 0){
-            return <p className="mt-10 font-medium">There are no renewals at this time. Please try again later</p>
+            return 
         }
     
 

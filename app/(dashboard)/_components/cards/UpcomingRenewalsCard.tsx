@@ -25,7 +25,7 @@ export default async function UpcomingRewalsCard(){
 
             </div>
             <div className="mt-5">
-                <Link href={'/assets'}><Button text="View All"/></Link>
+                <Link href={'/renewals'}><Button text="View renewals"/></Link>
   
             </div>
        

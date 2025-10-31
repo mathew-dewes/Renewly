@@ -28,7 +28,7 @@ const data = await getRenewalForcast(type, range);
             <div className="my-2 flex items-center gap-2">
             </div>
 
-            <RenewalsChart data={data} />
+            <RenewalsChart data={data} type={type} />
         </div>
     )
 }

@@ -1,12 +1,15 @@
 "use client"
 
 import { useState } from "react";
-import { assetTypes } from "../variables/constants";
+
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { renewalTypes } from "@/app/assets/variables/constants";
+import { RenewalType } from "@prisma/client";
 
 
-export default function TypeDropDown({ filter = "All Assets" }:
-  { filter: string }
+
+export default function RenewalTypeDropDown({type}:
+  {type: RenewalType | null}
 ) {
   const [isOpen, setIsOpen] = useState(false);
   const searchParams = useSearchParams();
@@ -22,7 +25,7 @@ export default function TypeDropDown({ filter = "All Assets" }:
     } else {
       params.set("type", type); 
     }
-      params.set("page", "1");
+    params.set("page", "1");
 
     router.push(`${pathname}?${params.toString()}`);
     setIsOpen(false); 
@@ -36,7 +39,7 @@ export default function TypeDropDown({ filter = "All Assets" }:
         className="bg-gray-500 text-light-500 rounded-lg cursor-pointer hover:bg-gray-600 text-sm px-3 py-2 text-center inline-flex items-center"
         type="button"
       >
-        {filter}
+       {!type ? "All" : type}
         <svg
           className="w-2.5 h-2.5 ms-3"
           aria-hidden="true"
@@ -60,7 +63,7 @@ export default function TypeDropDown({ filter = "All Assets" }:
              <li onClick={() => updateTypeParam("ALL")} className="block px-4 rounded-lg py-2 hover:bg-gray-100 font-base font-medium dark:hover:bg-gray-600 hover:text-white">
                   ALL
                 </li>
-            {assetTypes.map((type, key) => {
+            {renewalTypes.map((type, key) => {
     
               return (
                 <li onClick={() => updateTypeParam(type)} className="block px-4 rounded-lg py-2 hover:bg-gray-100 font-base font-medium dark:hover:bg-gray-600 hover:text-white" key={key}>

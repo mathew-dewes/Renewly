@@ -15,7 +15,6 @@ export default async function page({ searchParams }:
     { searchParams: Promise<{ type: AssetType, query?: string, page?: string }> }
 ) {
 
-    const filters = (await searchParams).type;
     const params = await searchParams;
     const query = (params.query ?? "").trim();
     const type = (params.type)
@@ -39,7 +38,7 @@ export default async function page({ searchParams }:
             <div className="flex items-center mt-3 gap-10">
                 <div className="flex gap-5 items-center">
                     <p className="font-semibold">View:</p>
-                    <TypeDropDown filter={filters} />
+                    <TypeDropDown filter={type} />
 
                 </div>
             </div>
@@ -47,7 +46,7 @@ export default async function page({ searchParams }:
             <SearchBar />
             <Suspense fallback={<div className="mt-10 mb-50"><LoadingSpinner text="Loading assets..." />
                 </div>}>
-                <AssetsTable filters={filters || null} page={page} pageSize={pageSize} />
+                <AssetsTable filters={type || null} page={page} pageSize={pageSize} />
             </Suspense>
             <div className="mt-5">
                 <Pagination

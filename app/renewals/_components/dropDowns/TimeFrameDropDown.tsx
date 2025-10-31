@@ -1,12 +1,14 @@
 "use client"
 
 import { useState } from "react";
-import { assetTypes } from "../variables/constants";
+
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { timeFrames } from "@/app/assets/variables/constants";
 
 
-export default function TypeDropDown({ filter = "All Assets" }:
-  { filter: string }
+
+export default function TimeFrameDropDown({timeFrame}:
+  {timeFrame: string | null}
 ) {
   const [isOpen, setIsOpen] = useState(false);
   const searchParams = useSearchParams();
@@ -14,15 +16,16 @@ export default function TypeDropDown({ filter = "All Assets" }:
   const router = useRouter();
 
 
-  const updateTypeParam = (type: string) => {
+  const updateTypeParam = (time: string) => {
     const params = new URLSearchParams(searchParams.toString());
 
-    if (type === "ALL") {
-      params.delete("type"); 
+    if (time === "ALL") {
+      params.delete("time"); 
     } else {
-      params.set("type", type); 
+      params.set("time", time); 
     }
-      params.set("page", "1");
+       params.set("page", "1");
+ 
 
     router.push(`${pathname}?${params.toString()}`);
     setIsOpen(false); 
@@ -36,7 +39,7 @@ export default function TypeDropDown({ filter = "All Assets" }:
         className="bg-gray-500 text-light-500 rounded-lg cursor-pointer hover:bg-gray-600 text-sm px-3 py-2 text-center inline-flex items-center"
         type="button"
       >
-        {filter}
+       {!timeFrame ? "All" : timeFrame.toUpperCase()}
         <svg
           className="w-2.5 h-2.5 ms-3"
           aria-hidden="true"
@@ -60,11 +63,11 @@ export default function TypeDropDown({ filter = "All Assets" }:
              <li onClick={() => updateTypeParam("ALL")} className="block px-4 rounded-lg py-2 hover:bg-gray-100 font-base font-medium dark:hover:bg-gray-600 hover:text-white">
                   ALL
                 </li>
-            {assetTypes.map((type, key) => {
+            {timeFrames.map((time, key) => {
     
               return (
-                <li onClick={() => updateTypeParam(type)} className="block px-4 rounded-lg py-2 hover:bg-gray-100 font-base font-medium dark:hover:bg-gray-600 hover:text-white" key={key}>
-                  {type}
+                <li onClick={() => updateTypeParam(time)} className="block px-4 rounded-lg py-2 hover:bg-gray-100 font-base font-medium dark:hover:bg-gray-600 hover:text-white" key={key}>
+                  {time.toUpperCase()}
                 </li>
               )
             })}
