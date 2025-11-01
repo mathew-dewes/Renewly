@@ -1,31 +1,23 @@
-
-import { getAssets } from "@/server/queries/assets";
-import { AssetType } from "@prisma/client";
-import Link from "next/link"
+"use client"
 
 
+import { $Enums } from "@prisma/client";
+import { useRouter } from "next/navigation";
 
-export default async function AssetsTable({ filters, page, pageSize }:
-    { filters: AssetType | null, page: number, pageSize: number }
-) {
+export function AssetTable({assets}:
+    {assets:{
+    id: string;
+    plantNumber: string;
+    name: string;
+    serial: string;
+    type: $Enums.AssetType;
+    location: $Enums.Location;
+}[]}
+){
 
-
-    const assets = await getAssets(filters, page, pageSize);
-
-
+      const router = useRouter();
     return (
-        <div className="mt-5">
-            <div className="flex items-center gap-5">
-   
-                <Link href={'/assets/add'}>
-                <button className={`text-sm bg-green-400 font-medium text-light-500 px-3 py-2 rounded-lg cursor-pointer hover:font-semibold`}>Create Asset</button>
-                </Link>
-            
-            </div>
-
-
-{assets.length !== 0 && 
-  <table className="w-full mt-5">
+          <table className="w-full mt-5">
                 <thead className="bg-gray-50">
                     <tr>
                         <th className="px-3 py-3 text-left text-xs font-medium text-dark-500 uppercase">Plant</th>
@@ -34,7 +26,7 @@ export default async function AssetsTable({ filters, page, pageSize }:
                         <th className="px-3 py-3 text-left text-xs font-medium text-dark-500 uppercase  md:hidden"></th>
                         <th className="px-3 py-3 text-left text-xs font-medium text-dark-500 uppercase hidden  lg:table-cell">Type</th>
                         <th className="px-3 py-3 text-left text-xs font-medium text-dark-500 uppercase hidden   lg:table-cell">Location</th>
-                        <th className="px-3 py-3 text-left text-xs font-medium text-dark-500 uppercase hidden   md:table-cell"></th>
+    
 
                     </tr>
                 </thead>
@@ -45,11 +37,11 @@ export default async function AssetsTable({ filters, page, pageSize }:
                 <tbody className="bg-white divide-y divide-gray-200">
                     {assets?.map((asset) => {
                         return (
-                            <tr key={asset.id} className="hover:bg-gray-50">
-
-
-
-                                <td className="px-3 py-4 text-sm text-dark-500  md:table-cell">{asset.plantNumber}</td>
+                            <tr 
+                            key={asset.id} onClick={() => router.push(`/assets/edit/${asset.id}`)} 
+                            className="hover:bg-gray-100 cursor-pointer">
+                        
+                                  <td className="px-3 py-4 text-sm text-dark-500  md:table-cell">{asset.plantNumber}</td>
                                 <td className="px-3 py-4 h-20 text-sm text-dark-500  md:table-cell">
                                     <div>
                                         <div className="font-medium">{asset.name}</div>
@@ -58,22 +50,9 @@ export default async function AssetsTable({ filters, page, pageSize }:
                                 </td>
 
                                 <td className="md:px-3 px-2 py-4 text-sm text-dark-500  md:table-cell">{asset.serial}</td>
-
-                                <td className="md:px-3 px-2 py-4 text-xs text-dark-500 md:hidden text-center">
-                                    <Link href={`/assets/edit/${asset.id}`}>Edit</Link>
-                                </td>
                                 <td className="md:px-3 px-2 py-4 text-sm text-dark-500 hidden  lg:table-cell">{asset.type}</td>
                                 <td className="md:px-3 px-2 py-4 text-sm text-dark-500 hidden  lg:table-cell">{asset.location}</td>
-                                <td className="md:px-3 px-2 py-4 text-sm text-dark-500 hidden  md:table-cell">
-                                    <Link href={`/assets/edit/${asset.id}`}>Edit</Link>
-                                </td>
-
-
-
-
-
-
-
+                           
 
 
                             </tr>
@@ -96,10 +75,6 @@ export default async function AssetsTable({ filters, page, pageSize }:
 
 
 
-            </table>}
-          
-        </div>
-
-
+            </table>
     )
 }

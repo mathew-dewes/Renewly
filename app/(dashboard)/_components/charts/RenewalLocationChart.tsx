@@ -25,7 +25,7 @@ export default function RenewalLocationChart({ data }:{ data: LocationData[] }){
   
 
     return (
-      <div  className="h-[200px] min-w-0 min-h-0 mt-3">
+      <div  className="h-[280px] md:h-[250px] min-w-0 min-h-0 mt-3">
                     <h2>Renewal Location</h2>
             <p>By asset type</p>
    <ResponsiveContainer width={"100%"} height={"100%"} aspect={undefined}>
@@ -54,7 +54,7 @@ export default function RenewalLocationChart({ data }:{ data: LocationData[] }){
               const d = new Date(label);
               return d.toLocaleDateString("default", { month: "short", day: "numeric" });
             }}/>
-      <Legend />
+      <Legend iconSize={10} iconType="circle" />
 
 
       <Bar dataKey="AUCKLAND"  fill="#00ff00"  />

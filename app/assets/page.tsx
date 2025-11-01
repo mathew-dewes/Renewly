@@ -1,7 +1,4 @@
 
-import AssetsTable from "./_components/AssetsTable";
-
-
 import { Suspense } from "react";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import { AssetType } from "@prisma/client";
@@ -9,6 +6,7 @@ import TypeDropDown from "./_components/TypeDropDown";
 import Pagination from "@/components/ui/Pagination";
 import prisma from "@/server/db/prisma";
 import SearchBar from "./_components/SearchBar";
+import AssetList from "./_components/AssetList";
 
 
 export default async function page({ searchParams }:
@@ -46,7 +44,7 @@ export default async function page({ searchParams }:
             <SearchBar />
             <Suspense fallback={<div className="mt-10 mb-50"><LoadingSpinner text="Loading assets..." />
                 </div>}>
-                <AssetsTable filters={type || null} page={page} pageSize={pageSize} />
+                <AssetList filters={type || null} page={page} pageSize={pageSize} />
             </Suspense>
             <div className="mt-5">
                 <Pagination
