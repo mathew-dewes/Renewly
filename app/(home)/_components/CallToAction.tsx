@@ -8,9 +8,9 @@ export default function CallToAction(){
 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vero odio consequuntur quisquam facilis, sed iure unde beatae accusantium aperiam? Deleniti.</p>
 <div className="mt-5">
   <p>Login to proceed</p>
-  <div className="mt-2 flex justify-center gap-5">
+  <div className="mt-5 flex justify-center gap-5">
     <Link href={'/auth/login'}><Button text="Login"/></Link>
-    <Link href={'/auth/register'}><Button text="Register"/></Link>
+
   </div>
 
 </div>
