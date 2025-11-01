@@ -15,9 +15,8 @@ export default async function RenewalForcast({type, range}:
 const data = await getRenewalForcast(type, range);
 
 
-
     return (
-        <div className="w-full">
+        <div>
             <h2>Renewal Forcast</h2>
             <p>By asset type</p>
             <div className="flex gap-3">
@@ -25,8 +24,6 @@ const data = await getRenewalForcast(type, range);
 <DateFilter filter={range}/>
             </div>
 
-            <div className="my-2 flex items-center gap-2">
-            </div>
 
             <RenewalsChart data={data} type={type} />
         </div>

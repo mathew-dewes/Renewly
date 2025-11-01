@@ -36,11 +36,12 @@ export default function RenewalsChart({ data, type }: {
   if (!mounted) return null;
 
   return (
-    <div className="h-[200px] min-w-0 min-h-0 mt-3">
+    <div className="h-[200px] mt-3 w-full">
 
       <ResponsiveContainer width={"100%"} height={"100%"} aspect={undefined}>
         <AreaChart
           data={data}
+          syncId="renewals"
 
         >
           <CartesianGrid strokeDasharray="3 3" />

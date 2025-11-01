@@ -21,7 +21,7 @@ export default function AssetTypeFilter({filter}:
     const params = new URLSearchParams(searchParams.toString());
       params.set("type", type);
        const newUrl = `${pathname}?${params.toString()}`;
-   router.replace(newUrl);
+   router.replace(newUrl,  { scroll: false });
     
   };
 

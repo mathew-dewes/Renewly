@@ -10,8 +10,6 @@ export default async function FortnightlyRenewalsCard(){
     const renewals = await getNext14DaysData();
 
 
-
-
     return (
               <div>
                          <h2 className="text-center md:text-left">Upcoming Renewals</h2>
