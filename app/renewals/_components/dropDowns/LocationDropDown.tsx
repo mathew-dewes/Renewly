@@ -39,7 +39,7 @@ export default function LocationDropDown({location}:
         className="bg-gray-500 text-light-500 rounded-lg cursor-pointer hover:bg-gray-600 text-sm px-3 py-2 text-center inline-flex items-center"
         type="button"
       >
-        {!location ? "All" : location}
+        {!location ? "All REGIONS" : location}
         <svg
           className="w-2.5 h-2.5 ms-3"
           aria-hidden="true"
@@ -61,7 +61,7 @@ export default function LocationDropDown({location}:
         <div className="absolute left-0 w-fit p-2 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow-sm z-10">
           <ul className="py-2 text-sm font-semibold text-dark-500">
              <li onClick={() => updateTypeParam("ALL")} className="block px-4 rounded-lg py-2 hover:bg-gray-100 font-base font-medium dark:hover:bg-gray-600 hover:text-white">
-                  ALL
+                  All REGIONS
                 </li>
             {Locations.map((location, key) => {
     

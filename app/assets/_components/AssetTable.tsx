@@ -23,17 +23,10 @@ export function AssetTable({assets}:
                         <th className="px-3 py-3 text-left text-xs font-medium text-dark-500 uppercase">Plant</th>
                         <th className="px-3 py-3 text-left text-xs font-medium text-dark-500 uppercase">Asset</th>
                         <th className="px-3 py-3 text-left text-xs font-medium text-dark-500 uppercase">Serial</th>
-                        <th className="px-3 py-3 text-left text-xs font-medium text-dark-500 uppercase  md:hidden"></th>
-                        <th className="px-3 py-3 text-left text-xs font-medium text-dark-500 uppercase hidden  lg:table-cell">Type</th>
-                        <th className="px-3 py-3 text-left text-xs font-medium text-dark-500 uppercase hidden   lg:table-cell">Location</th>
-    
-
+                        <th className="px-3 py-3 text-left text-xs font-medium text-dark-500 uppercase hidden  md:table-cell">Type</th>
+                        <th className="px-3 py-3 text-left text-xs font-medium text-dark-500 uppercase hidden  md:table-cell">Location</th>
                     </tr>
                 </thead>
-
-
-
-
                 <tbody className="bg-white divide-y divide-gray-200">
                     {assets?.map((asset) => {
                         return (
@@ -48,13 +41,9 @@ export function AssetTable({assets}:
                                     </div>
 
                                 </td>
-
                                 <td className="md:px-3 px-2 py-4 text-sm text-dark-500  md:table-cell">{asset.serial}</td>
-                                <td className="md:px-3 px-2 py-4 text-sm text-dark-500 hidden  lg:table-cell">{asset.type}</td>
-                                <td className="md:px-3 px-2 py-4 text-sm text-dark-500 hidden  lg:table-cell">{asset.location}</td>
-                           
-
-
+                                <td className="md:px-3 px-2 py-4 text-sm text-dark-500 hidden  md:table-cell">{asset.type}</td>
+                                <td className="md:px-3 px-2 py-4 text-sm text-dark-500 hidden  md:table-cell">{asset.location}</td>
                             </tr>
                         )
                     })}

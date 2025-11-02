@@ -19,8 +19,6 @@ export default async function page({ searchParams }:
 
    const totalFoundAssets = await renewalCount(location, type, time);
 
-   console.log(totalFoundAssets + " results found");
-
        const pageSize = 5;
     const page = Math.max(1, Number(params.page ?? 1));
     const totalPages = Math.max(1, Math.ceil(totalFoundAssets / pageSize));
@@ -33,11 +31,10 @@ export default async function page({ searchParams }:
       <div>
            <h2>Renewals</h2>
                   <div className="flex items-center mt-3 gap-10">
-                      <div className="flex gap-5 items-center">
-                          <p className="font-semibold">Filters:</p>
+                
                           <Filters location={location} assetType={type} time={time} />
           
-                      </div>
+                     
                   </div>
                   <p><span className="font-semibold">Results:</span> {totalFoundAssets}</p>
         <Suspense fallback={<div className="mt-10 mb-50"><LoadingSpinner text="Loading assets..." />

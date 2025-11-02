@@ -20,7 +20,7 @@ const getPageUrl = (page: number) => {
 };
 
     const getVisablePages = () =>{
-        const delta = 2;
+        const delta = 1;
         const range = []
         const rangeWithDots = [];
 
@@ -49,17 +49,17 @@ const getPageUrl = (page: number) => {
 
 const visablePages = getVisablePages();
     return (
-        <nav className="flex items-center justify-center gap-1">
+        <nav className="flex items-center w-full justify-center gap-1">
             <Link
                 className={`flex items-center px-3 py-2 text-sm font-medium rounded-lg ${currentPage <= 1 ? "text-gray-400 cursor-not-allowed bg-gray-100" : "text-gray-700 hover:bg-gray-100 bg-white border border-gray-300"}`}
                 href={getPageUrl(currentPage - 1)}
                 aria-disabled={currentPage <= 1}
-            ><ChevronLeft />Previous</Link>
+            ><ChevronLeft /><p className="hidden md:block">Previous</p></Link>
 
             {visablePages.map((page, key)=>{
 
                 if (page === "..."){
-                    return <span key={key} className="px-3 py-2 text-sm text-gray-500">...</span>
+                    return <span key={key} className="px-2 py-2 text-sm text-gray-500">...</span>
                 }
 
                 const pageNumber = page as number;
@@ -72,8 +72,8 @@ const visablePages = getVisablePages();
                 )
             })}
             <Link   href={getPageUrl(currentPage + 1)}
-                className={`flex items-center px-3 py-2 text-sm font-medium rounded-lg ${currentPage >= totalPages ? "text-gray-400 cursor-not-allowed bg-gray-100" : "text-gray-700 hover:bg-gray-100 bg-white border border-gray-300"}`}
-                aria-disabled={currentPage >= totalPages}><ChevronRight />Next</Link>
+                className={`flex items-center px-2 py-2 text-sm font-medium rounded-lg ${currentPage >= totalPages ? "text-gray-400 cursor-not-allowed bg-gray-100" : "text-gray-700 hover:bg-gray-100 bg-white border border-gray-300"}`}
+                aria-disabled={currentPage >= totalPages}><ChevronRight /><p className="hidden md:block">Next</p></Link>
         </nav>
     )
 }

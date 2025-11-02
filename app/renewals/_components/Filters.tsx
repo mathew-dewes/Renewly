@@ -9,15 +9,15 @@ export default function Filters({location, assetType, time}:
 ){
     return (
                   <div className="flex gap-5">
-                    <div className="flex items-center gap-2">
-                  <p className="text-center font-medium">Location: </p>
-                        <LocationDropDown location={location} />
+                    <div className="flex flex-col gap-1.5">
+                  <p className="font-medium">Location: </p>
+                    <LocationDropDown location={location} />
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-col gap-1.5">
                                 <p className="text-center font-medium">Renewal type</p>
                         <RenewalTypeDropDown type={assetType}/>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-col gap-1.5">
                                 <p className="text-center font-medium">Time frame</p>
                         <TimeFrameDropDown timeFrame={time}/>
                     </div>

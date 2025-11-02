@@ -46,7 +46,7 @@ export default async function page({ searchParams }:
                 </div>}>
                 <AssetList filters={type || null} page={page} pageSize={pageSize} />
             </Suspense>
-            <div className="mt-5">
+            <div className="mt-5 w-full">
                 <Pagination
                     currentPage={page}
                     totalPages={totalPages}
