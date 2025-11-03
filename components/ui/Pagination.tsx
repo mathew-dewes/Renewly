@@ -20,7 +20,7 @@ const getPageUrl = (page: number) => {
 };
 
     const getVisablePages = () =>{
-        const delta = 1;
+        const delta = 2;
         const range = []
         const rangeWithDots = [];
 

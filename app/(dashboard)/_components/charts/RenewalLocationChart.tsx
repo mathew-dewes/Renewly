@@ -26,8 +26,8 @@ export default function RenewalLocationChart({ data }:{ data: LocationData[] }){
 
     return (
       <div  className="h-[280px] md:h-[250px] min-w-0 min-h-0 mt-3">
-                    <h2>Renewal Location</h2>
-            <p>By asset type</p>
+                    <h2 className="text-xl text-center md:text-left">Renewal Location</h2>
+            <p className="text-center md:text-left">By asset type</p>
    <ResponsiveContainer width={"100%"} height={"100%"} aspect={undefined}>
 
  <BarChart

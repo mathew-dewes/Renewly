@@ -11,7 +11,7 @@ export function HamburgerButton({
     mobileMenu, onClick}:ButtonProps){
     return(
         <button className="cursor-pointer lg:hidden sm:block" onClick={onClick} aria-labelledby='nav-label' aria-expanded={mobileMenu}> 
-            <Image className="invert brightness-0" src={'/hamburger.png'} width={42} height={24} alt="Hamburger icon"/>
+            <Image className="invert brightness-0 w-auto" src={'/hamburger.png'} width={42} height={24} alt="Hamburger icon"/>
         </button>
     )
 }

@@ -32,8 +32,8 @@ export default async function page({ searchParams }:
 
     return (
         <div>
-            <h2>Assets</h2>
-            <div className="flex items-center mt-3 gap-10">
+            <h2 className="text-center md:text-left">Assets</h2>
+            <div className="flex items-center mt-5 gap-10">
                 <div className="flex gap-5 items-center">
                     <p className="font-semibold">View:</p>
                     <TypeDropDown filter={type} />

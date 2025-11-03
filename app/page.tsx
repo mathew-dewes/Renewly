@@ -24,6 +24,7 @@ export default async function page({
  
       {!session ? <CallToAction/> : 
       <div className="flex flex-col">
+        <h2 className="text-center md:text-left">Dashboard</h2>
 
 <Dashboard type={type || "EQUIPMENT"} range={range || "fornightly"}/>
 

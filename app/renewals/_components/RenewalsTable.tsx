@@ -86,7 +86,7 @@ export default async function RenewalsTable({location, renewalType, time, page, 
                             <td className="px-6 py-4 text-sm text-dark-500 hidden md:table-cell text-center">
                 
    
-                <Link href={'/renewals/update/' + renewal.id}>
+                <Link href={'/renewals/update/' + renewal.asset.id}>
                 <button className={`text-sm bg-green-400 font-medium text-light-500 px-3 py-2 rounded-lg cursor-pointer hover:font-semibold`}>Update</button>
                 </Link>
             

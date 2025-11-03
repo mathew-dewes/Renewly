@@ -17,8 +17,8 @@ const data = await getRenewalForcast(type, range);
 
     return (
         <div>
-            <h2>Renewal Forcast</h2>
-            <p>By asset type</p>
+            <h2 className="text-xl text-center md:text-left">Renewal Forcast</h2>
+            <p className="text-center md:text-left">By asset type</p>
             <div className="flex gap-3">
 <AssetTypeFilter filter={type}/>
 <DateFilter filter={range}/>

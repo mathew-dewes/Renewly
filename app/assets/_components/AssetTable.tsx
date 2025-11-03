@@ -31,7 +31,7 @@ export function AssetTable({assets}:
                     {assets?.map((asset) => {
                         return (
                             <tr 
-                            key={asset.id} onClick={() => router.push(`/assets/edit/${asset.id}`)} 
+                            key={asset.id} onClick={() => router.push(`/assets/${asset.id}`)} 
                             className="hover:bg-gray-100 cursor-pointer">
                         
                                   <td className="px-3 py-4 text-sm text-dark-500  md:table-cell">{asset.plantNumber}</td>

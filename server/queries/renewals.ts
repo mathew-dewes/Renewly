@@ -60,6 +60,7 @@ export async function getRenewals(location: Location | null, type: RenewalType |
       id: true,
       asset: {
         select: {
+          id:true,
           plantNumber: true,
           name: true,
           location: true,
@@ -98,9 +99,9 @@ export async function getRenewals(location: Location | null, type: RenewalType |
 
 
 export async function getRenewal(id: string){
-  return await prisma.renewal.findUnique({
+  return await prisma.renewal.findFirst({
     where:{
-      id
+      assetId: id
     },
     select:{
       renewalType:true,

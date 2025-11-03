@@ -16,6 +16,12 @@ export default function LocationDropDown({location}:
   const router = useRouter();
 
 
+  const atPath = (path: string) =>{
+    return searchParams.get("location") === path
+  }
+
+
+
   const updateTypeParam = (location: string) => {
     const params = new URLSearchParams(searchParams.toString());
 
@@ -60,13 +66,17 @@ export default function LocationDropDown({location}:
       {isOpen && (
         <div className="absolute left-0 w-fit p-2 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow-sm z-10">
           <ul className="py-2 text-sm font-semibold text-dark-500">
-             <li onClick={() => updateTypeParam("ALL")} className="block px-4 rounded-lg py-2 hover:bg-gray-100 font-base font-medium dark:hover:bg-gray-600 hover:text-white">
+             <li onClick={() => updateTypeParam("ALL")} 
+             className={`block px-4 uppercase rounded-lg py-2  font-base font-medium
+             ${!searchParams.get("location") ? "bg-blue-accent-500 text-white" : "hover:bg-blue-accent-500 hover:text-white cursor-pointer"}`}>
                   All REGIONS
                 </li>
             {Locations.map((location, key) => {
     
               return (
-                <li onClick={() => updateTypeParam(location)} className="block px-4 rounded-lg py-2 hover:bg-gray-100 font-base font-medium dark:hover:bg-gray-600 hover:text-white" key={key}>
+                <li onClick={() => updateTypeParam(location)} 
+                className={`block px-4 uppercase rounded-lg py-2  font-base font-medium
+                ${atPath(location) ? "bg-blue-accent-500 text-white" : "hover:bg-blue-accent-500 hover:text-white cursor-pointer"}`} key={key}>
                   {location}
                 </li>
               )

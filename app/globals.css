@@ -30,7 +30,7 @@
   }
 
   h2{
-    @apply font-semibold text-xl md:text-2xl
+    @apply font-semibold text-2xl
   }
 }
 

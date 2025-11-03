@@ -10,7 +10,7 @@ export default async function UpcomingRewalsCard(){
     
     return (
         <div>
-            <h2>Next due renewals</h2>
+            <h2 className="text-xl text-center md:text-left">Latest Renewals</h2>
             <div className="mt-3 flex flex-col gap-2">
                 {renewals.map((renewal)=>{
                     const asset = renewal.asset;

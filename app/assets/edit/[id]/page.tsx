@@ -1,7 +1,6 @@
-import prisma from "@/server/db/prisma";
 import EditAssetForm from "./_components/EditAssetForm";
-import DeleteAssetButton from "../../[id]/_components/DeleteAssetButton";
 import GoBack from "@/components/ui/GoBack";
+import { getDefaultAssetValues } from "@/server/queries/assets";
 
 export default async function page({params}:
     {params: Promise<{id: string}>}
@@ -9,27 +8,7 @@ export default async function page({params}:
 
         const {id} = await params;
 
-        const defaulValues = await prisma.asset.findUnique({
-            where:{
-                id
-            },
-            select:{
-                id: true,
-                name:true,
-                plantNumber:true,
-                serial: true,
-                location:true,
-                type:true,
-        
-                renewals:{
-                    select:{
-                        renewalType: true,
-                        renewalDate: true
-                    }
-                }
-
-            }
-        });
+        const defaulValues = await getDefaultAssetValues(id)
 
         if (!defaulValues) return
    
@@ -39,11 +18,8 @@ export default async function page({params}:
     return(
         <div>
            <h1>Edit Asset</h1>
-           <GoBack text="Assets" href="/assets"/>
+           <GoBack text="Return" href={`/assets/${id}`}/>
             <EditAssetForm values={defaulValues}/>
-            <div className="mt-10">
-                <DeleteAssetButton assetId={id}/>
-            </div>
         </div>
     )
 }
