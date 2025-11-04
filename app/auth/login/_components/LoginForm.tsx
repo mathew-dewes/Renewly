@@ -28,9 +28,7 @@ export default function LoginForm() {
 
     const onSubmit = async (values: FormFields) => {
         const result = await loginUser(values)
-        
-
-
+    
 
         if (result.status === "error") {
             setIsError(true);
