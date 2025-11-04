@@ -20,6 +20,7 @@ export default function TypeDropDown({ filter = "All Assets" }:
     if (type === "ALL") {
       params.delete("type"); 
     } else {
+      params.delete("query")
       params.set("type", type); 
     }
       params.set("page", "1");

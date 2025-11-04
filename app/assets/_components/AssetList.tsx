@@ -6,10 +6,10 @@ import { AssetTable } from "./AssetTable";
 
 
 
-export default async function AssetList({ filters, page, pageSize }:
-    { filters: AssetType | null, page: number, pageSize: number }
+export default async function AssetList({ filters, page, pageSize, query }:
+    { filters: AssetType | null, page: number, pageSize: number, query: string | null }
 ) {
-const assets = await getAssets(filters, page, pageSize);
+const assets = await getAssets(filters, page, pageSize, query);
 
 
     return (

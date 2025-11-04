@@ -104,7 +104,9 @@ export async function getRenewal(id: string){
       assetId: id
     },
     select:{
+      id:true,
       renewalType:true,
+      renewalDate:true,
       asset:{
         select:{
           name:true,

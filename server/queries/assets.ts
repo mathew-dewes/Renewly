@@ -3,37 +3,35 @@
 import { AssetType } from "@prisma/client";
 import prisma from "../db/prisma";
 
-export async function getAssets(filter: AssetType | null, page: number, pageSize:number) {
-
-    return await prisma.asset.findMany({
-        select: {
-            id: true,
-            plantNumber: true,
-            name: true,
-            serial: true,
-            type: true,
-            location: true,
+export async function getAssets(filter: AssetType | null, page: number, pageSize:number, query: string | null) {
 
 
-        },
-        take:pageSize,
-        orderBy:{
-            createdAt:"desc"
-        },
-        skip: (page - 1) * pageSize,
-        ...(filter && {
-            where: {
-                type: {
-                    equals: filter
-                }
-            },
-           
-        })
-        
-
+  return await prisma.asset.findMany({
+    select: {
+      id: true,
+      plantNumber: true,
+      name: true,
+      serial: true,
+      type: true,
+      location: true,
     },
-    
-    );
+    take: pageSize,
+    skip: (page - 1) * pageSize,
+    orderBy: {
+      createdAt: "desc",
+    },
+    where: {
+      ...(filter && { type: { equals: filter } }),
+      ...(query && {
+        OR: [
+          { name: { contains: query } },
+          { plantNumber: { contains: query } },
+          { serial: { contains: query } },
+     
+        ],
+      }),
+    },
+  });
 }
 
 export async function getAsset(id: string) {

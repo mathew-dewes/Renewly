@@ -104,10 +104,6 @@ export async function updateAsset(values: z.infer<typeof assetSchema>) {
         }
     }
 
-    console.log(values);
-
-    
-
 
     const { id, asset, assetType, plant, serialNumber, location, renewalType, renewalDate } = values;
 

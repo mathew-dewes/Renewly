@@ -7,6 +7,7 @@ import Pagination from "@/components/ui/Pagination";
 import prisma from "@/server/db/prisma";
 import SearchBar from "./_components/SearchBar";
 import AssetList from "./_components/AssetList";
+import FilterReseter from "@/components/ui/FilterReseter";
 
 
 export default async function page({ searchParams }:
@@ -20,8 +21,17 @@ export default async function page({ searchParams }:
 
     const totalAssets = await prisma.asset.count({
         where: {
-            type
-        }
+            type,
+                  ...(query && {
+        OR: [
+          { name: { contains: query } },
+          { plantNumber: { contains: query } },
+          { serial: { contains: query } },
+     
+        ],
+      }),
+        },
+        
     });
 
     const pageSize = 5;
@@ -33,18 +43,25 @@ export default async function page({ searchParams }:
     return (
         <div>
             <h2 className="text-center md:text-left">Assets</h2>
-            <div className="flex items-center mt-5 gap-10">
+            <div className="flex items-center mt-5 gap-3 md:gap-5">
                 <div className="flex gap-5 items-center">
                     <p className="font-semibold">View:</p>
                     <TypeDropDown filter={type} />
 
                 </div>
+                        {(query || type) && <FilterReseter  href="/assets"/>}
             </div>
+ 
+
+       
 
             <SearchBar />
+            {query && <p className="mt-5">{totalAssets} results found for search query &quot;{query}&quot; </p>}
+            {type && <p className="mt-5">{totalAssets} results found for asset type &quot;{type}&quot; </p>}
+
             <Suspense fallback={<div className="mt-10 mb-50"><LoadingSpinner text="Loading assets..." />
                 </div>}>
-                <AssetList filters={type || null} page={page} pageSize={pageSize} />
+                <AssetList filters={type || null} page={page} pageSize={pageSize} query={query || null} />
             </Suspense>
             <div className="mt-5 w-full">
                 <Pagination

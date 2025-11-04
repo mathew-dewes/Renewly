@@ -52,8 +52,7 @@ export default function EditAssetForm({values}:
         location: values?.location as Location,
         assetType: values?.type,
         renewalType: values?.renewals[0].renewalType,
-        renewalDate: values?.renewals[0].renewalDate
-  ? new Date(values.renewals[0].renewalDate).toISOString().split("T")[0]
+        renewalDate: values?.renewals[0].renewalDate ? new Date(values.renewals[0].renewalDate).toISOString().split("T")[0]
   : ""
     }
    });
@@ -156,7 +155,7 @@ export default function EditAssetForm({values}:
             </option>
           ))}
         </select>
-        {errors.assetType &&
+        {errors.renewalType &&
           <ErrorMessage message={errors.renewalType?.message} />}
       </div>
       <div className="flex flex-col gap-2 w-full md:w-1/2">

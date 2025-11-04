@@ -3,7 +3,6 @@
 import { useState } from "react";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { renewalTypes } from "@/app/assets/variables/constants";
 import { RenewalType } from "@prisma/client";
 
 
@@ -15,6 +14,8 @@ export default function RenewalTypeDropDown({type}:
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
+
+  const renewals = Object.values(RenewalType);
 
     const atPath = (path: string) =>{
     return searchParams.get("type") === path
@@ -68,7 +69,7 @@ export default function RenewalTypeDropDown({type}:
              ${!searchParams.get("type") ? "bg-blue-accent-500 text-white" : "hover:bg-blue-accent-500 hover:text-white cursor-pointer"}`}>
                   ALL TYPES
                 </li>
-            {renewalTypes.map((type, key) => {
+            {renewals.map((type, key) => {
     
               return (
                 <li onClick={() => updateTypeParam(type)} className={`block px-4 uppercase rounded-lg py-2  font-base font-medium
