@@ -20,6 +20,9 @@ const navLinks = [
     {name:"Renewals", href: "/renewals"}
 ]
 
+
+
+
 export default  function Navbar({ session }:
     { session: Session | null }
 ) {
@@ -33,6 +36,16 @@ export default  function Navbar({ session }:
             router.push("/")
             closeMenu()
         }
+
+        function MenuButton(){
+    if (!session) return
+    if (isMenuOpen){
+        return <MenuCloseButton onClick={closeMenu} />
+    } else{
+        return <HamburgerButton onClick={() => setIsMenuOpen(prev => !prev)} />
+    }
+
+}
     
     
     return (
@@ -41,7 +54,6 @@ export default  function Navbar({ session }:
             {session && <ul className="md:flex gap-30 hidden">
        <div className="flex gap-8 font-light">
     
-    {/* Desktop */}
         {navLinks.map((link, key)=>{
             return <Link 
             className={`${path === link.href ? "font-bold scale-105" : ""}`} 
@@ -49,7 +61,6 @@ export default  function Navbar({ session }:
                 {link.name}</Link>
         })}
 
-        {/* Mobile */}
                 <button className='md:hidden p-2 text-foreground z-50' 
         aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
         onClick={() => setIsMenuOpen((prev)=>!prev)}>{isMenuOpen ? <X size={24}/> : <Menu size={24}/>}</button>
@@ -75,10 +86,9 @@ export default  function Navbar({ session }:
             </ul>}
 
             <div className="md:hidden block">
+            
+    {MenuButton()}
 
-     {isMenuOpen ? <MenuCloseButton onClick={closeMenu} /> : <HamburgerButton onClick={() => setIsMenuOpen(prev => !prev)} />}
-
-        {/* Mobile menu */}
           <div className={`p-5 z-10 absolute xl:hidden top-20 left-0 w-full bg-light-500 text-black flex flex-col item-center gap-6  text-lg shadow-lg
                 transform transition-transform ${isMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"}
                 `}
@@ -96,7 +106,7 @@ export default  function Navbar({ session }:
             
                     transition-all cursor-pointer`}>Logout</button>
 
-                        {/* <LogoutButton/> */}
+    
 
       
        

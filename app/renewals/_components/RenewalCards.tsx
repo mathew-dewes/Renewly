@@ -53,7 +53,9 @@ export default async function RenewalCards({location, renewalType, time, page, p
       
             <div className="flex items-center gap-2">
             <h3>Renewal date:</h3>
-            <p>{renewal.renewalDate.toLocaleDateString()}</p>
+            <p>{renewal.renewalDate.toLocaleDateString("en-NZ", {
+  timeZone: "Pacific/Auckland",
+})}</p>
             </div>
                 <div className="flex items-center gap-2 mt-2">
                     <h3>Status:</h3>

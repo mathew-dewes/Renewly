@@ -27,7 +27,9 @@ export default async function Asset({ assetId }:
                                 <div style={{ backgroundColor: renewalStatusStyle(asset.renewals[0].renewalDate) }} className="h-2 w-2 rounded-full" />
                                 <p>{statusLabel(asset.renewals[0].renewalDate).label}</p>
                               </div>
-                    <p><span className="font-semibold">Renewal date:</span> {asset.renewals[0].renewalDate.toLocaleDateString()}</p>
+                    <p><span className="font-semibold">Renewal date:</span> {asset.renewals[0].renewalDate.toLocaleDateString("en-NZ", {
+  timeZone: "Pacific/Auckland",
+})}</p>
                 </div>
 
             </div>

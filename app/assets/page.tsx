@@ -51,9 +51,6 @@ export default async function page({ searchParams }:
                 </div>
                         {(query || type) && <FilterReseter  href="/assets"/>}
             </div>
- 
-
-       
 
             <SearchBar />
             {query && <p className="mt-5">{totalAssets} results found for search query &quot;{query}&quot; </p>}
