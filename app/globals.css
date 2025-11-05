@@ -32,6 +32,10 @@
   h2{
     @apply font-semibold text-2xl
   }
+
+  input {
+    @apply text-base
+  }
 }
 
 

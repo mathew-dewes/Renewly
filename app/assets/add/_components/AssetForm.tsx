@@ -11,14 +11,15 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod"
 import ErrorMessage from "../../../../components/ui/ErrorMessage";
-import { assetTypes, renewalTypes } from "../../variables/constants";
+import { assetTypes } from "../../variables/constants";
 import { assetSchema } from "@/server/mutations/schemas";
 import { createAsset } from "@/server/mutations/assets";
-import { Location } from "@prisma/client";
+import { Location, RenewalType } from "@prisma/client";
 const today = new Date().toISOString().split("T")[0];
 
 
 const locations = Object.values(Location);
+const renewalTypes = Object.values(RenewalType)
 
 
 
@@ -62,20 +63,20 @@ export default function AssetForm() {
         <input {...register("asset")}
           type="text"
           id="title"
-          className={`bg-gray-50 border border-gray-300 text-sm rounded-lg block w-full p-2.5`}
+          className={`bg-gray-50 border border-gray-300 rounded-lg block w-full p-2.5`}
 
         />
         {errors.asset &&
           <ErrorMessage message={errors.asset?.message} />}
       </div>
       <div>
-        <label htmlFor="title" className="block mb-2 text-sm font-medium">
+        <label htmlFor="title" className="block mb-2 font-medium">
           Plant number
         </label>
         <input {...register("plant")}
           type="text"
           id="title"
-          className={`bg-gray-50  border uppercase border-gray-300 text-sm active:ring-amber-300 rounded-lg block w-full p-2.5`}
+          className={`bg-gray-50  border uppercase border-gray-300 active:ring-amber-300 rounded-lg block w-full p-2.5`}
 
         />
         {errors.plant &&
@@ -88,7 +89,7 @@ export default function AssetForm() {
         <input {...register("serialNumber")}
           type="text"
           id="title"
-          className={`bg-gray-50 border uppercase border-gray-300 text-sm rounded-lg  block w-full p-2.5`}
+          className={`bg-gray-50 border uppercase border-gray-300 rounded-lg  block w-full p-2.5`}
 
         />
         {errors.serialNumber &&

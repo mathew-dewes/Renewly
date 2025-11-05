@@ -76,7 +76,9 @@ export default async function RenewalsTable({location, renewalType, time, page, 
 
                             <td className="px-6 py-4 text-sm text-dark-500 hidden md:table-cell">{renewal.renewalType}</td>
                             <td className="px-6 py-4 text-sm text-dark-500 hidden md:table-cell">{renewal.asset.location}</td>
-                            <td className="px-6 py-4 text-sm text-dark-500 hidden lg:table-cell">{renewal.renewalDate.toLocaleDateString()}</td>
+                            <td className="px-6 py-4 text-sm text-dark-500 hidden lg:table-cell">{renewal.renewalDate.toLocaleDateString("en-NZ", {
+  timeZone: "Pacific/Auckland",
+})}</td>
                             <td className={`px-6 py-4 text-sm text-dark-500 hidden lg:table-cell`}>
                                 <div className="flex items-center gap-2">
                                           <div style={{backgroundColor:renewalStatusStyle(renewal.renewalDate)}} className="h-2 w-2 rounded-full"/>
