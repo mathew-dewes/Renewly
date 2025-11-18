@@ -23,7 +23,7 @@ export default function UpdateRenewalForm({ assetId, renewalDate }:
   const today = new Date().toISOString().split("T")[0];
   const router = useRouter();
 
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormFields>({
+  const { register, handleSubmit, formState: { errors } } = useForm<FormFields>({
     resolver: zodResolver(renewalSchema),
     defaultValues: {
       id: assetId,
@@ -64,7 +64,7 @@ export default function UpdateRenewalForm({ assetId, renewalDate }:
         </div>
       </div>
       <div className="mt-10">
-        <Button text={isSubmitting ? "Updating" : "Update"} />
+        <Button text={"Update"} />
       </div>
       <div className="mt-5">
         {serverError && <ErrorMessage message={serverError} />}

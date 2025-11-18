@@ -1,14 +1,17 @@
+import { getSession } from "@/server/auth/auth";
 import LoginForm from "./_components/LoginForm";
+import { redirect } from "next/navigation";
 
-export default function loginPage(){
+export default async function loginPage(){
+
+        const session = await getSession();
+        if (session) redirect('/');
     return(
         <div>
             <div className="text-center mt-20">
                 <h2>Login</h2>
-            <p className="mt-2">Welcome to Renewly! Keep track of your assets renewals today</p>
             </div>
-
-            <LoginForm/>
+         <LoginForm/>
         </div>
     )
 }

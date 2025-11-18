@@ -5,6 +5,7 @@ import { loginUserSchema, registerUserSchema } from "../validation/schema";
 import { auth } from "../config/auth";
 import { APIError } from "better-auth/api";
 import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 
 
@@ -116,4 +117,12 @@ export async function getSession(){
 export async function getUserId(){
         const user = await auth.api.getSession({headers: await headers()});
     return user?.user.id
+}
+
+export async function authProtection(){
+    const session = await getSession();
+
+    if (!session){
+        redirect('/auth')
+    }
 }

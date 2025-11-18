@@ -2,7 +2,8 @@
 import { renewalStatusStyle, statusLabel } from "@/server/queries/helper";
 import { getRenewal } from "@/server/queries/renewals";
 import UpdateRenewalForm from "./_components/UpdateRenewalForm";
-import GoBack from "@/components/ui/GoBack";
+import BreadCrumb from "@/components/ui/BreadCrumb";
+
 
 export default async function page({ params }:
   { params: Promise<{ id: string }> }
@@ -19,8 +20,14 @@ export default async function page({ params }:
 
 
       <div>
-        <GoBack text="Renewals" href="/renewals"/>
-        <h2 className="mt-5">{renewal?.asset.name}</h2>
+        
+                         <div className="flex gap-4">
+                                             <BreadCrumb route="Renewals" href="/renewals" active={false}/>
+                                             <BreadCrumb route={"Update - " + renewal.asset.plantNumber} href="/renewals" active={true}/>
+                                      
+                                           </div>
+    <div className="bg-white border rounded border-gray-200 shadow-lg px-5 py-8 text-sm w-full md:w-120 mt-3">
+        <h2>{renewal?.asset.name}</h2>
         <div className="flex flex-col gap-1 mt-2">
 
         <p><span className="font-semibold">Serial / REGO:</span> {renewal?.asset.serial}</p>
@@ -41,6 +48,9 @@ export default async function page({ params }:
           <UpdateRenewalForm assetId={renewal.id} renewalDate={renewal.renewalDate}/>
       
       </div>
+      </div>
+      
+  
   
   )
 }

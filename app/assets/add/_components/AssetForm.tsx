@@ -19,12 +19,6 @@ const today = new Date().toISOString().split("T")[0];
 
 
 const locations = Object.values(Location);
-
-
-
-
-
-
 type FormFields = z.infer<typeof assetSchema>
 
 export default function AssetForm() {

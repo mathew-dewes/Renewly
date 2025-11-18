@@ -8,6 +8,7 @@ import prisma from "@/server/db/prisma";
 import SearchBar from "./_components/SearchBar";
 import AssetList from "./_components/AssetList";
 import FilterReseter from "@/components/ui/FilterReseter";
+import BreadCrumb from "@/components/ui/BreadCrumb";
 
 
 export default async function page({ searchParams }:
@@ -42,7 +43,9 @@ export default async function page({ searchParams }:
 
     return (
         <div>
-            <h2 className="text-center md:text-left">Assets</h2>
+                  <div className="flex gap-4">
+                  <BreadCrumb route="Assets" href="/assets" active={true}/>
+                </div>
             <div className="flex items-center mt-5 gap-3 md:gap-5">
                 <div className="flex gap-5 items-center">
                     <p className="font-semibold">View:</p>

@@ -19,7 +19,7 @@ export default function DeleteAssetButton({ assetId }:
     }
 
     return <button onClick={handleDelete} className={`bg-red-400 text-light-500 px-8 py-2 rounded-lg cursor-pointer hover:font-semibold`}>
-        {isPending ? "Deleting" : "Delete Asset"}
+        {isPending ? "Deleting" : "Delete"}
     </button>
 
 }

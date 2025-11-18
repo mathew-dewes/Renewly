@@ -8,6 +8,7 @@ import { renewalCount } from "@/server/queries/renewals";
 import Pagination from "@/components/ui/Pagination";
 import RenewalCards from "./_components/RenewalCards";
 import FilterReseter from "@/components/ui/FilterReseter";
+import BreadCrumb from "@/components/ui/BreadCrumb";
 
 export default async function page({ searchParams }:
     { searchParams: Promise<{ location: Location | null, page?: string, type: RenewalType | null, time: string | null }> }
@@ -28,13 +29,15 @@ export default async function page({ searchParams }:
 
     return (
         <div>
-            <h2 className="text-center md:text-left">Renewals</h2>
+                 <div className="flex gap-4">
+                                     <BreadCrumb route="Renewals" href="/renewals" active={true}/>
+                                   </div>
             <div className="flex items-center mt-5">
                 <div className="flex gap-3 md:gap-5 md:items-center flex-col md:flex-row">
                     <p className="font-semibold">Filters:</p>
                     <Filters location={location} assetType={type} time={time} />
                            {(location || type || time) && <FilterReseter href="/renewals"/>}
-                </div>
+                </div> 
             
             </div>
             <p className="mt-5"><span className="font-semibold">Results:</span> {totalFoundAssets}</p>

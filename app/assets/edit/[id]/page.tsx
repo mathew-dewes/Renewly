@@ -1,5 +1,5 @@
+import BreadCrumb from "@/components/ui/BreadCrumb";
 import EditAssetForm from "./_components/EditAssetForm";
-import GoBack from "@/components/ui/GoBack";
 import { getDefaultAssetValues } from "@/server/queries/assets";
 
 export default async function page({params}:
@@ -8,7 +8,10 @@ export default async function page({params}:
 
         const {id} = await params;
 
-        const defaulValues = await getDefaultAssetValues(id)
+        const defaulValues = await getDefaultAssetValues(id);
+
+
+        
 
         if (!defaulValues) return
    
@@ -17,8 +20,12 @@ export default async function page({params}:
 
     return(
         <div>
-           <h1>Edit Asset</h1>
-           <GoBack text="Return" href={`/assets/${id}`}/>
+                 <div className="flex gap-4">
+                                                         <BreadCrumb route="Assets" href="/assets" active={false}/>
+                                                         <BreadCrumb route={"Edit - " + defaulValues.plantNumber} href="/renewals" active={true}/>
+                                                 
+                                                  
+                                                       </div>
             <EditAssetForm values={defaulValues}/>
         </div>
     )

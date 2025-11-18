@@ -3,6 +3,8 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "../components/navigation/Navbar";
 import { getSession } from "@/server/auth/auth";
+import Features from "./(home)/_components/Featues";
+
 
 
 
@@ -36,6 +38,9 @@ export default async function RootLayout({
         <main className="mx-5 md:mx-10 mt-5">
  
           {children}
+          <div>
+            <Features/>
+          </div>
         </main>
         <footer className="h-20"></footer>
 

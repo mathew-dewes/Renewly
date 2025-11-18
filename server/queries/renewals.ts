@@ -111,7 +111,8 @@ export async function getRenewal(id: string){
         select:{
           name:true,
           type:true,
-          serial: true
+          serial: true,
+          plantNumber: true
         }
       }
     },

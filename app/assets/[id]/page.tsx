@@ -1,8 +1,8 @@
-import Button from "@/components/ui/Button";
+
+import BreadCrumb from "@/components/ui/BreadCrumb";
 import Asset from "./_components/Asset";
-import GoBack from "@/components/ui/GoBack";
-import DeleteAssetButton from "./_components/DeleteAssetButton";
-import Link from "next/link";
+import prisma from "@/server/db/prisma";
+
 
 
 export default async function page({params}:
@@ -11,28 +11,25 @@ export default async function page({params}:
 
     const {id} = await params;
 
+    const asset = await prisma.asset.findUnique({
+        where: {id},
+        select:{
+            plantNumber: true
+        }
+    });
 
- 
+    if (!asset || !id) return
+
 
     return (
         <div>
-         <GoBack text="Assets" href={"/assets"}/>
-            <div className="w-full sm:w-150 mt-5 bg-gray-50 px-5 py-5 rounded-xl">
+                  <div className="flex gap-4">
+                  <BreadCrumb route="Assets" href="/assets" active={false}/>
+                <BreadCrumb route={asset?.plantNumber} href="/" active={true}/>
+                </div>
+            <div>
      <Asset assetId={id}/>
-            <div className="flex flex-col md:flex-row mt-5 justify-between">
-            <div className="flex gap-4">
-            <Link href={'/assets/edit/' + id}><Button text="Edit"/></Link>
-            <Link href={'/renewals/update/' + id}><Button text="Update renewal"/></Link>
-   
- 
-
-           
-            </div>
-            <div className="mt-8 md:mt-0">
-              <DeleteAssetButton assetId={id}/>
-            </div>
-  
-            </div>
+          
             </div>
        
 

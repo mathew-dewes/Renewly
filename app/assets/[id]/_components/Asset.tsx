@@ -1,6 +1,9 @@
 
+import Button from "@/components/ui/Button";
 import { getAsset } from "@/server/queries/assets"
 import { renewalStatusStyle, statusLabel } from "@/server/queries/helper";
+import Link from "next/link";
+import DeleteAssetButton from "./DeleteAssetButton";
 
 
 export default async function Asset({ assetId }:
@@ -12,7 +15,7 @@ export default async function Asset({ assetId }:
 
     if (!asset) return
     return (
-        <div className="flex gap-5">
+        <div className=" bg-white border rounded border-gray-200 shadow-lg px-5 py-8 text-sm mt-2 w-full md:w-120">
 
             <div>
                 <h1>{asset.name}</h1>
@@ -30,6 +33,20 @@ export default async function Asset({ assetId }:
                     <p><span className="font-semibold">Renewal date:</span> {asset.renewals[0].renewalDate.toLocaleDateString()}</p>
                 </div>
 
+            </div>
+              <div className="flex justify-between mt-5 flex-col md:flex-row">
+            <div className="flex gap-2">
+            <Link href={'/assets/edit/' + assetId}><Button text="Edit"/></Link>
+            <Link href={'/renewals/update/' + assetId}><Button text="Update"/></Link>
+   
+ 
+
+           
+            </div>
+            <div className="mt-5 md:mt-0">
+              <DeleteAssetButton assetId={assetId}/>
+            </div>
+  
             </div>
 
         </div>

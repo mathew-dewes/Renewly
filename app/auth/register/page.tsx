@@ -1,12 +1,16 @@
+import { getSession } from "@/server/auth/auth";
 import RegisterForm from "./_components/RegisterForm";
+import { redirect } from "next/navigation";
 
 
-export default function RegisterPage(){
+export default async function RegisterPage(){
+
+            const session = await getSession();
+            if (session) redirect('/');
     return(
         <div>
             <div className="text-center mt-20">
                 <h2>Register</h2>
-            <p className="mt-2">Welcome to Renewly! Keep track of your assets renewals today</p>
             </div>
 
             <RegisterForm/>
