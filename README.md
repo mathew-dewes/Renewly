@@ -4,7 +4,7 @@ An application designed to visualize and track upcoming renewals across a wide r
 Features:
 Authentication  
 Database management
-Live charts data
+Live chart data
 Form validation
 
 Live Demo:
